@@ -30,14 +30,17 @@ Route::get('/admission', [AdmissionController::class,'admission'])->name('admiss
 
 Route::group(['prefix' => 'job-solution'], function () {
     Route::get('/', [JobSolutionController::class, 'jobSolution'])->name('jobSolution');
+});
+
+Route::group(['prefix' => 'previous-job-exams'], function () {
+    Route::get('/', [PreviousJobExamsController::class, 'previousJobExams'])->name('previousJobExams');
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('{type}/{slug}', [JobSolutionController::class, 'jobsolutionExamQuestion'])->name('jobsolutionExamQuestion');
-    }); 
+        Route::get('{type}/{slug}', [PreviousJobExamsController::class, 'previousJobExamsQuestion'])->name('previousJobExamsQuestion');
+    });
 });
 
 Route::group(['prefix' => 'exams'], function () {
     Route::get('/', [ExamController::class, 'exams'])->name('exams');
-    Route::get('{slug}', [ExamController::class, 'exam'])->name('exam');
 });
 
 

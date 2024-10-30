@@ -8,10 +8,9 @@
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/" class="nav-link px-2 ">Home</a></li>
-        <li><a href="{{ route('admission') }}" class="nav-link px-2">Admission</a></li>
         <li><a href="{{ route('jobSolution') }}" class="nav-link px-2">Job Solution</a></li>
-        <li><a href="{{ route('programming') }}" class="nav-link px-2">Programming</a></li>
-        <li><a href="{{ route('exams') }}" class="nav-link px-2">Exams</a></li>
+        <li><a href="{{ route('previousJobExams') }}" class="nav-link px-2">Previous Job Exams</a></li>
+        <li><a href="{{ route('exams') }}" class="nav-link px-2">Test(Exams)</a></li>
     </ul>
 
     <div class="col-md-3 text-end">

@@ -6,12 +6,7 @@ use Illuminate\Http\Request;
 
 class JobSolutionController extends Controller
 {
-    public function jobSolution()
-    {
-        return view('custom.pages.jobSolution.jobsolution');
-    }
-    public function jobsolutionExamQuestion()
-    {
-        return view('custom.pages.jobSolution.jobsolutionexamquestion');
+    public function jobSolution(){
+        return view('custom.pages.job_solution.job_solution_topic');
     }
 }
