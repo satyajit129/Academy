@@ -10,27 +10,13 @@
             </li>
 
             <li>
-                <a href="{{ route('typeList') }}" aria-expanded="false"
-                    class="{{ request()->routeIs('typeList', 'typeCreateorUpdate') ? 'active' : '' }}">
+                <a href="{{ route('subjectList') }}" aria-expanded="false"
+                    class="{{ request()->routeIs('subjectList') ? 'active' : '' }}">
                     <i class="icon icon-app-store "></i>
-                    <span class="nav-text">Movie Types</span>
+                    <span class="nav-text">Subjects</span>
                 </a>
             </li>
-
-            <li>
-                <a href="{{ route('movieList') }}" aria-expanded="false"
-                    class="{{ request()->routeIs('movieList', 'movieCreateorUpdate') ? 'active' : '' }}">
-                    <i class="icon icon-app-store "></i>
-                    <span class="nav-text">Movies</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('adminUserList') }}" aria-expanded="false"
-                    class="{{ request()->routeIs('adminUserList', 'adminUserCreateorUpdate') ? 'active' : '' }}">
-                    <i class="icon icon-app-store "></i>
-                    <span class="nav-text">Users</span>
-                </a>
-            </li>
+            
             <li>
                 <a href="{{ route('settings') }}" aria-expanded="false"
                     class="{{ request()->routeIs('settings') ? 'active' : '' }}">

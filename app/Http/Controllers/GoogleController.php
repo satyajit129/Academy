@@ -26,11 +26,12 @@ class GoogleController extends Controller
 
     public function googleCallback()
     {
+        // dd('okkkk');
         try {
             $user = Socialite::driver('google')->user();
+            // dd($user);
             $finduser = User::where('email', $user->email)->where('google_id', $user->getId())->first();
 
-            Log::info($finduser);
 
             $folderPath = public_path('images/');
             if (!file_exists($folderPath)) {
@@ -38,10 +39,8 @@ class GoogleController extends Controller
             }
 
             $imageName = uniqid() . '.jpg';
-            Log::info($imageName);
             $imageUrl = $user->avatar;
 
-            // Use cURL to fetch image contents more reliably
             $ch = curl_init($imageUrl);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -53,10 +52,7 @@ class GoogleController extends Controller
             } else {
                 $imageName = null; 
             }
-
             if ($finduser) {
-                Log::info('$finduser');
-                Log::info($finduser);
                 
                 $finduser->update([
                     'profile_image' => $imageName,
@@ -72,6 +68,8 @@ class GoogleController extends Controller
                     'profile_image' => $imageName,
                     'password' => bcrypt('123456abc'),
                 ]);
+
+                
 
                 Auth::login($newUser);
                 return redirect()->intended('/');

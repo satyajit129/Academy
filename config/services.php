@@ -30,6 +30,12 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URL'),
     ],
 
+    // 'google' => [
+    //     'client_id' => '258985307486-hdcbe76gss7em2u5q6b488jnvtdc2o37.apps.googleusercontent.com',
+    //     'client_secret' => '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',
+    //     'redirect' => 'http://127.0.0.1:8000/auth/google/callback',
+    // ],
+
     'resend' => [
         'key' => env('RESEND_KEY'),
     ],

@@ -16,15 +16,17 @@ class AdminAuthController extends Controller
     }
     public function adminLoginRequest(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         try {
             $credentials = $request->only('email', 'password');
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
-                if ($user->role == UserRole::ADMIN) {
+                // dd($user->role);
+                if ($user->role === UserRole::ADMIN->value) {
                     return redirect()->route('adminDashboard')->with('success', 'Welcome to the Dashboard!');
                 } else {
-                    Auth::logout(); // Log out if the user isn't an admin
+                    // dd('okkk');
+                    Auth::logout();
                     return redirect()->back()->with('error', 'You are not authorized to access the Dashboard');
                 }
             } else {

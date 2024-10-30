@@ -4,19 +4,17 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
-// 
-
-
 Route::view('/', 'custom.pages.landing');
+
+// Authentication Route
 Route::get('/login', [AuthController::class,'login'])->name('login');
 Route::post('/login-request', [AuthController::class,'loginRequest'])->name('loginRequest');
-
 Route::get('/auth/google', [GoogleController::class,'redirectToGoogle'])->name('redirectToGoogle');
 Route::get('/auth/google/callback', [GoogleController::class,'googleCallback'])->name('googleCallback');
-
 Route::get('/register', [AuthController::class,'register'])->name('register');
 Route::post('/register-request', [AuthController:: class,'registerRequest'])->name('registerRequest');
+// Authentication Route
+
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [AuthController::class,'logout'])->name('logout');
@@ -42,5 +40,3 @@ Route::group(['prefix' => 'previous-job-exams'], function () {
 Route::group(['prefix' => 'exams'], function () {
     Route::get('/', [ExamController::class, 'exams'])->name('exams');
 });
-
-

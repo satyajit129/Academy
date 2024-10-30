@@ -21,25 +21,6 @@
                             <i class="mdi mdi-bell"></i>
                             <div class="pulse-css"></div>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            @php
-                                $notifications = DB::table('notifications')->latest()->get();
-                            @endphp
-                            <ul class="list-unstyled">
-                                @foreach ($notifications as $notification)
-                                    @php
-                                        $data = json_decode($notification->data, true);
-                                    @endphp
-                                    <li class="media dropdown-item">
-                                        <span class="success"><i class="ti-user"></i></span>
-                                        <div class="media-body">
-                                            <p><a href="{{ $data['url'] }}">{{ $data['message'] }}</a></p>
-                                        </div>
-                                        <span class="notify-time">{{ $notification->created_at ? \Carbon\Carbon::parse($notification->created_at)->diffForHumans() : 'N/A' }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
                         
                     </li>
                     <li class="nav-item dropdown header-profile">
@@ -47,7 +28,7 @@
                             <i class="mdi mdi-account"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="{{ route('adminProfile') }}" class="dropdown-item">
+                            <a href="" class="dropdown-item">
                                 <i class="icon-user"></i>
                                 <span class="ml-2">Profile </span>
                             </a>
@@ -55,7 +36,7 @@
                                 <i class="icon-envelope-open"></i>
                                 <span class="ml-2">Inbox </span>
                             </a>
-                            <a href="{{ route('adminLogout') }}" class="dropdown-item sweet-confirm">
+                            <a href="" class="dropdown-item sweet-confirm">
                                 <i class="icon-key"></i>
                                 <span class="ml-2">Logout</span>
                             </a>
