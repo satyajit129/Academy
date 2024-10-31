@@ -1,5 +1,5 @@
 @extends('backend.global.master')
-@section('title', 'Subject Create/Edit')
+@section('title', 'Year Create/Edit')
 @section('custom_css')
 @endsection
 
@@ -12,20 +12,20 @@
                 <div class="card">
                     @include('backend.global.alert')
                     <div class="card-header">
-                        <h4 class="card-title">Subject Information</h4>
-                        <a href="{{ route('subjectList') }}" class="btn btn-primary btn-rounded">Back To List</a>
+                        <h4 class="card-title">Year Information</h4>
+                        <a href="{{ route('yearsList') }}" class="btn btn-primary btn-rounded">Back To List</a>
                     </div>
-                    <form action="{{ route('subjectStore', isset($subject) ? $subject->id : '') }}" method="POST"
+                    <form action="{{ route('yearsStore', isset($year) ? $year->id : '') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
 
                         <div class="card-body">
                             <div class="basic-form">
                                 <div class="form-group">
-                                    <label for="name">Subject Name</label>
-                                    <input type="text" class="form-control" name="name" id="subject-name"
-                                        value="{{ old('name', isset($subject) ? $subject->name : '') }}"
-                                        placeholder="Enter Subject name" required>
+                                    <label for="year">Year</label>
+                                    <input type="number" class="form-control" name="year" 
+                                        value="{{ old('year', isset($year) ? $year->year : '') }}"
+                                        placeholder="Enter Year" required>
                                 </div>
                             </div>
 

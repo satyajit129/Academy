@@ -16,7 +16,6 @@ class AdminAuthController extends Controller
     }
     public function adminLoginRequest(Request $request)
     {
-        // dd($request->all());
         try {
             $credentials = $request->only('email', 'password');
             if (Auth::attempt($credentials)) {
@@ -36,5 +35,10 @@ class AdminAuthController extends Controller
             Log::error($th->getMessage());
             return redirect()->back()->with('error', 'An error occurred during login');
         }
+    }
+    public function adminLogout()
+    {
+        Auth::logout();
+        return redirect()->route('adminAuth');
     }
 }
