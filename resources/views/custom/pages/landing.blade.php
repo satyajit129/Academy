@@ -1,93 +1,173 @@
-@extends('custom.global.master')
+@extends('custom.global.app')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div id="carouselExampleCaptions" class="carousel slide">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://placeholder.pics/svg/2500x900" class="d-block w-100 " alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://placeholder.pics/svg/2500x900" class="d-block w-100 " alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Second slide label</h5>
-                            <p>Some representative placeholder content for the second slide.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://placeholder.pics/svg/2500x900" class="d-block w-100 " alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Third slide label</h5>
-                            <p>Some representative placeholder content for the third slide.</p>
+    <!-- Carousel Start -->
+    <div class="container-fluid p-0 pb-5">
+        <div class="owl-carousel header-carousel position-relative mb-5">
+            <div class="owl-carousel-item position-relative">
+                <img class="img-fluid" src="{{ asset('landing/img/carousel-1.jpg') }}" alt="">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                    style="background: rgba(6, 3, 21, .5);">
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <div class="col-10 col-lg-8">
+                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Bangladesh's Leading Job Solution</h5>
+                                <h1 class="display-3 text-white animated slideInDown mb-4">Your #1 Platform for <span class="text-primary">Career Success</span> in Bangladesh</h1>
+                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Discover the latest job opportunities across Bangladesh, tailored career resources, and guidance to help you succeed. Whether you're a fresh graduate or a seasoned professional, we’re here to support your journey.</p>
+                                {{-- <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Explore Jobs</a>
+                                <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Get Career Advice</a> --}}
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
-        </div>
-    </div>
-
-    <div class="container-fluid mt-5">
-
-        <div class="row mb-2">
-            <h2 class="text-center border-bottom">সেবাসমূহ</h2>
-            <div class="col-md-4">
-                <div class="row g-0 border  overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-primary-emphasis">ভর্তি প্রস্তুতি
-                        </strong>
-                        <h3 class="mb-0">বিশ্ববিদ্যালয় ভর্তির পূর্ণাঙ্গ সমাধান</h3>
-                        <a href="{{ route('admission') }}" class="icon-link gap-1 icon-link-hover stretched-link">
-                            Continue reading
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="row g-0 border  overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-success-emphasis">প্রোগ্রামিং প্রস্তুতি</strong>
-                        <h3 class="mb-0">স্কিল ডেভেলপমেন্ট সেকশন</h3>
-                        <a href="{{ route('programming') }}" class="icon-link gap-1 icon-link-hover stretched-link">
-                            Continue reading
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="row g-0 border  overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-success-emphasis">চাকরি প্রস্তুতি
-                        </strong>
-                        <h3 class="mb-0">চাকরি প্রস্তুতির পূর্ণাঙ্গ সমাধান</h3>
-                        <a href="{{ route('jobSolution') }}" class="icon-link gap-1 icon-link-hover stretched-link">
-                            Continue reading
-                        </a>
+            <div class="owl-carousel-item position-relative">
+                <img class="img-fluid" src="{{ asset('landing/img/carousel-2.jpg') }}" alt="">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                    style="background: rgba(6, 3, 21, .5);">
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <div class="col-10 col-lg-8">
+                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Your Career Hub in Bangladesh</h5>
+                                <h1 class="display-3 text-white animated slideInDown mb-4">#1 Platform for <span class="text-primary">Job Opportunities</span> & Growth</h1>
+                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Explore top job openings, career resources, and expert guidance tailored for job seekers in Bangladesh. We’re here to connect you with the right opportunities and support your career journey every step of the way.</p>
+                                {{-- <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Browse Jobs</a>
+                                <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Get Career Tips</a> --}}
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Carousel End -->
+
+
+    <!-- Service Start -->
+    <div class="container-xxl py-5">
+        <div class="container py-5">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="text-secondary text-uppercase">আমাদের সেবাসমুহ</h6>
+                <h1 class="mb-5">আমাদের সেবা সমুহ ঘুরে দেখুন</h1>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="service-item p-4">
+                        <div class="overflow-hidden mb-4">
+                            <img class="img-fluid" src="img/service-1.jpg" alt="">
+                        </div>
+                        <h4 class="mb-3">কমপ্লিট জব সল্যুশন</h4>
+                        <p>You can view the full Job solution information by clicking this button.</p>
+                        <a class="btn-slide mt-2" href="{{ route('jobSolution') }}"><i class="fa fa-arrow-right"></i><span>আরও দেখুন</span></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="service-item p-4">
+                        <div class="overflow-hidden mb-4">
+                            <img class="img-fluid" src="img/service-2.jpg" alt="">
+                        </div>
+                        <h4 class="mb-3">বিগত চাকরির পরিক্ষাসমুহ</h4>
+                        <p>You can view the specifics of the previous job exam by clicking this button.</p>
+                        <a class="btn-slide mt-2" href="{{ route('previousJobExams') }}"><i class="fa fa-arrow-right"></i><span>আরও দেখুন</span></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.7s">
+                    <div class="service-item p-4">
+                        <div class="overflow-hidden mb-4">
+                            <img class="img-fluid" src="img/service-3.jpg" alt="">
+                        </div>
+                        <h4 class="mb-3">নিজেকে যাচাইকরণ</h4>
+                        <p>Do you want to test yourself and see your progress? Click here to take a test.</p>
+                        <a class="btn-slide mt-2" href="{{ route('exams') }}"><i class="fa fa-arrow-right"></i><span>আরও দেখুন</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Service End -->
+
+
+
+    <!-- Team Start -->
+    <div class="container-xxl py-5">
+        <div class="container py-5">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="text-secondary text-uppercase">Our Team</h6>
+                <h1 class="mb-5">Expert Team Members</h1>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="team-item p-4">
+                        <div class="overflow-hidden mb-4">
+                            <img class="img-fluid" src="img/team-1.jpg" alt="">
+                        </div>
+                        <h5 class="mb-0">Full Name</h5>
+                        <p>Designation</p>
+                        <div class="btn-slide mt-1">
+                            <i class="fa fa-share"></i>
+                            <span>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="team-item p-4">
+                        <div class="overflow-hidden mb-4">
+                            <img class="img-fluid" src="img/team-2.jpg" alt="">
+                        </div>
+                        <h5 class="mb-0">Full Name</h5>
+                        <p>Designation</p>
+                        <div class="btn-slide mt-1">
+                            <i class="fa fa-share"></i>
+                            <span>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                    <div class="team-item p-4">
+                        <div class="overflow-hidden mb-4">
+                            <img class="img-fluid" src="img/team-3.jpg" alt="">
+                        </div>
+                        <h5 class="mb-0">Full Name</h5>
+                        <p>Designation</p>
+                        <div class="btn-slide mt-1">
+                            <i class="fa fa-share"></i>
+                            <span>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.9s">
+                    <div class="team-item p-4">
+                        <div class="overflow-hidden mb-4">
+                            <img class="img-fluid" src="img/team-4.jpg" alt="">
+                        </div>
+                        <h5 class="mb-0">Full Name</h5>
+                        <p>Designation</p>
+                        <div class="btn-slide mt-1">
+                            <i class="fa fa-share"></i>
+                            <span>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Team End -->
 @endsection

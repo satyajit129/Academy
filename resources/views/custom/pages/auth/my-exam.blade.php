@@ -1,10 +1,24 @@
-@extends('custom.global.master')
+@extends('custom.global.app')
 
 @section('custom_css')
     
 @endsection
 
 @section('content')
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5" style="margin-bottom: 6rem;">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">বিগত চাকরির পরীক্ষা</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">About</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
 <div class="container-fluid ">
     <div class="row">
         <div class="col-lg-5 bg-light p-3">
@@ -28,17 +42,18 @@
                             <thead class="table-primary">
                                 <tr>
                                     <th class="text-center w-50">Exams</th>
-                                    <th class="text-center w-50">1</th>
+                                    <th class="text-center w-50">{{ $user_custom_exams->count() }}</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
                                 <tr>
                                     <td class="text-center w-50">Passed</td>
-                                    <td class="text-center w-50">1</td>
+                                    <td class="text-center w-50">{{ $passed_count }}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-center w-50">Failed</td>
-                                    <td class="text-center w-50">0</td>
+                                    <td class="text-center w-50">{{ $failed_count }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -110,74 +125,34 @@
                 <div class="card-body">
                     <div class="accordion" id="accordionExample">
                         <div class="row">
-                            <!-- Accordion Item 1 -->
-                            <div class="col-lg-6 mb-3">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Accordion Item #1
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the first item's accordion body.</strong> You can modify this section with the content you want to display.
+                            @foreach ($user_custom_exams as $index => $user_custom_exam)
+                                <div class="col-lg-6 mb-3">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading{{ $user_custom_exam->id }}">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                                                    data-bs-target="#collapse{{ $user_custom_exam->id }}" 
+                                                    aria-expanded="true" aria-controls="collapse{{ $user_custom_exam->id }}">
+                                                {{ \Carbon\Carbon::parse($user_custom_exam->exam_date_time)->format('j F Y h:i A') }}
+                                            </button>
+                                        </h2>
+                                        <div id="collapse{{ $user_custom_exam->id }}" class="accordion-collapse collapse" 
+                                             aria-labelledby="heading{{ $user_custom_exam->id }}" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <strong>Exam Date:</strong> {{ $user_custom_exam->exam_date_time }} <br>
+                                                <strong>Final Score:</strong> {{ $user_custom_exam->final_score }} <br>
+                                                <strong>Total Answered:</strong> {{ $user_custom_exam->total_answered }} <br></strong>
+                                                <strong>Total Correct:</strong> {{ $user_custom_exam->total_correct }} <br>
+                                                <strong>Total Wrong:</strong> {{ $user_custom_exam->total_wrong }} <br>
+                                                <!-- You can add more dynamic content here -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                
-                            <!-- Accordion Item 2 -->
-                            <div class="col-lg-6 mb-3">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingTwo">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Accordion Item #2
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the second item's accordion body.</strong> You can modify this section with the content you want to display.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                
-                        <div class="row">
-                            <!-- Accordion Item 3 -->
-                            <div class="col-lg-6 mb-3">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingThree">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Accordion Item #3
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the third item's accordion body.</strong> You can modify this section with the content you want to display.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <!-- Accordion Item 4 -->
-                            <div class="col-lg-6 mb-3">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingFour">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                            Accordion Item #4
-                                        </button>
-                                    </h2>
-                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the fourth item's accordion body.</strong> You can modify this section with the content you want to display.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
+                
                 
             </div>
         </div>

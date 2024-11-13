@@ -1,6 +1,7 @@
-@extends('custom.global.master')
+@extends('custom.global.app')
 
 @section('content')
+
     <div class="container-fluid ">
         <div class=" cover-image w-100 ">
             <img src="{{ asset('images/mountain.jpg') }}" class=" w-100" alt="">

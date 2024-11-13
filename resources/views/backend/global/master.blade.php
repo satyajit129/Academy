@@ -15,7 +15,7 @@
         @include('backend.layout.navabr')
         @include('backend.layout.header')
         @include('backend.layout.sidebar')
-        <div class="content-body">
+        <div class="content-body" style="min-height: 1100px !important;">
             @yield('content')
         </div>
         @include('backend.layout.footer')

@@ -12,4 +12,11 @@ class PreviousExam extends Model
     public function year(){
         return $this->belongsTo(Year::class);
     }
+    public function questions()
+    {
+        return $this->belongsToMany(Question::class, 'previous_exam_question', 'exam_id', 'question_id');
+    }
+    public function category(){
+        return $this->belongsTo(PreviousExamCategory::class);
+    }
 }

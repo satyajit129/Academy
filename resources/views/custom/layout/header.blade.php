@@ -14,7 +14,6 @@
     </ul>
 
     <div class="col-md-3 text-end">
-
         @if (Auth::check())
             @if (Auth::user()->profile_image != null)
                 <img src="{{ asset('images/' . Auth::user()->profile_image) }}" alt="User Icon"
@@ -29,7 +28,6 @@
             <a href="{{ route('login') }}" class="btn btn-outline-primary btn-sm me-2 rounded-0">Login</a>
             <a href="{{ route('register') }}" class="btn btn-outline-primary btn-sm me-2 rounded-0">Register</a>
         @endif
-
     </div>
 
     <!-- Offcanvas Structure -->

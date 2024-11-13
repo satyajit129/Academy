@@ -11,7 +11,10 @@
         time: true,
         date: false
     });
-    $('#date-format').bootstrapMaterialDatePicker({
+    $('.date-format').bootstrapMaterialDatePicker({
+        format: 'dddd DD MMMM YYYY - HH:mm'
+    });
+    $('.date-format').bootstrapMaterialDatePicker({
         format: 'dddd DD MMMM YYYY - HH:mm'
     });
 

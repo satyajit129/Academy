@@ -31,7 +31,13 @@
                     <span class="nav-text">Subject Topics</span>
                 </a>
             </li>
-
+            <li>
+                <a href="{{ route('subjectSubTopicsList') }}" aria-expanded="false" aria-expanded="false"
+                    class="{{ request()->routeIs('subjectSubTopicsList', 'subjectSubTopicsCreateOrEdit') ? 'active' : '' }}">
+                    <i class="icon icon-app-store "></i>
+                    <span class="nav-text">Subject Sub Topics</span>
+                </a>
+            </li>
             
             <li>
                 <a href="{{ route('yearsList') }}" aria-expanded="false"
@@ -41,15 +47,29 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('previousExamsList') }}" aria-expanded="false"
-                    class="{{ request()->routeIs('previousExamsList', 'previousExamsCreateOrEdit') ? 'active' : '' }}">
-                    <i class="icon icon-app-store "></i>
-                    <span class="nav-text">Previous Exam</span>
-                </a>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="true">
+                    <i class="icon icon-app-store"></i><span class="nav-text">Previous Exam</span></a>
+                    <ul aria-expanded="true" class="mm-collapse mm-show">
+                        <li><a href="{{ route('previousExamsCategoryList') }}">Previous Exam Category List</a></li>
+                    <li>
+                        <a href="{{ route('previousExamsList') }}">Previous Exam List</a>
+                    </li>
+                    <li><a href="{{ route('assignQuestionsList') }}">Assign Question List</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="true">
+                    <i class="icon icon-app-store "></i><span class="nav-text">Custom Exam</span></a>
+                <ul aria-expanded="true" class="mm-collapse mm-show">
+                    <li>
+                        <a  href="{{ route('customExamsList') }}">Custom Exam List</a>
+                    </li>
+                    
+                </ul>
             </li>
             <li>
                 <a href="{{ route('questionList') }}" aria-expanded="false"
-                    class="{{ request()->routeIs('questionList', 'questionCreateOrEdit') ? 'active' : '' }}">
+                    class="{{ request()->routeIs('questionList', 'questionCreate') ? 'active' : '' }}">
                     <i class="icon icon-app-store "></i>
                     <span class="nav-text">Questions</span>
                 </a>

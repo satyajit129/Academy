@@ -28,7 +28,19 @@
                                         placeholder="Enter Previous Exam name" required>
                                 </div>
                             </div>
-
+                            <div class="basic-form">
+                                <div class="form-group">
+                                    <label for="category_id">Previous Exam Category</label>
+                                    <select class="form-control" name="category_id" id="category_id">
+                                        <option selected disabled>Select Previous Exam Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}"
+                                                {{ old('category_id', isset($previous_exam) ? $previous_exam->category_id : '') == $category->id ? 'selected' : '' }}>
+                                                {{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="basic-form">
                                 <div class="form-group">
                                     <label for="exam_code">Exam Code</label>
@@ -37,8 +49,14 @@
                                         placeholder="Enter Exam Code" required>
                                 </div>
                             </div>
-
-                            
+                            <div class="basic-form">
+                                <div class="form-group">
+                                    <label for="negative_mark">Negetive Mark</label>
+                                    <input type="text" class="form-control" name="negative_mark" id="negative_mark"
+                                        value="{{ old('negative_mark', isset($previous_exam) ? $previous_exam->negative_mark : '') }}"
+                                        placeholder="Enter Negetive Mark" required>
+                                </div>
+                            </div>
                             <div class="basic-form">
                                 <div class="form-group">
                                     <label for="year_id">Year</label>

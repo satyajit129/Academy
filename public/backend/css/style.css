@@ -648,7 +648,8 @@ pre {
 
 .pre-scrollable {
   max-height: 340px;
-  overflow-y: scroll; }
+  overflow-y: scroll; 
+}
 
 .container {
   width: 100%;
@@ -10363,7 +10364,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     .quixnav .metismenu li {
       position: relative; }
     .quixnav .metismenu ul {
-      background-color: #1c0f54;
+      /* background-color: #1c0f54; */
       transition: all .2s ease-in-out; }
       .quixnav .metismenu ul a {
         padding-left: 54px;

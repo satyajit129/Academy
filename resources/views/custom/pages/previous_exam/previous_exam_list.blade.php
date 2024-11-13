@@ -1,135 +1,118 @@
-@extends('custom.global.master')
+@extends('custom.global.app')
+
+@section('custom_css')
+<style>
+    .exam-item .card {
+        transition: transform 0.3s ease-in-out;
+    }
+    .exam-item .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .exam-item .exam-name {
+        color: #28a745; 
+    }
+    #searchInput {
+        border: 2px solid #28a745;
+    }
+</style>
+@endsection
 
 @section('content')
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5" style="margin-bottom: 6rem;">
+        <div class="container py-5">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">বিগত চাকরির পরীক্ষা</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page">About</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
     <div class="container-fluid mt-5">
-        <div class="row mb-2 align-items-center">
-            <h2 class="text-center border-bottom">বিগত চাকরির পরীক্ষা</h2>
-            <div class="col-lg-2">
-                <div class="row g-0 border overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <button type="button" class="btn btn-primary rounded-0 w-100" data-bs-toggle="offcanvas"
-                            data-bs-target="#filterOffcanvas" aria-controls="filterOffcanvas">
-                            ফিল্টার করুন
-                        </button>
+        <div class="row mb-2">
+            
+            <div class="col-lg-4 col-12 mt-1">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="m-0">অন্যান্য নিয়োগ পরীক্ষা</h4>
                     </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="{{ route('previousJobExams') }}"><i class="fas fa-briefcase me-2"></i> সব পরীক্ষা</a>
+                            </li>
+                            @foreach ($others_jobs_categories as $category)
+                            @php
+                                $category_id = encrypt($category->id);
+                            @endphp
+                                <li class="list-group-item">
+                                    <a class="" href="{{ route('previousJobExams', ['category' => $category_id]) }}">
+                                        <i class="fas fa-briefcase me-2"></i>
+                                        {{ $category->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    
                 </div>
             </div>
-            <div class="col-lg-10">
-                <div class="row g-0 border overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-
-                    <div class="col-lg-4 p-4 d-flex flex-column position-static">
-                        <div class="card rounded-0">
-                            <div class="card-body">
-                                <strong class="d-inline-block mb-2 text-success-emphasis">NRBC Bank PLC || Trainee Assistant
-                                    Officer(TAO) (26-10-2024) - <span class="badge bg-success">50</span></strong>
-                                <div class="d-flex justify-content-start gap-3 align-items-center">
-                                    <div class="mb-1 text-body-secondary border p-2">Nov 12</div>
-                                    <div class="mb-1 text-body-secondary border p-2">MCQ</div>
-                                    <div class="mb-1 text-body-secondary border p-2">Written</div>
-                                </div>
-                                <div class="d-flex justify-content-between gap-3 align-items-center">
-                                    <a href="{{ route('previousJobExamsQuestion',['type' => 'mcq', 'slug' => 'nrbc-bank-plc']) }}" class="icon-link gap-1 icon-link-hover stretched-link">
-                                        See all Question
-                                    </a>
-                                </div>
+            <div class="col-lg-8 col-12 mt-1">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="m-0">বিগত চাকরির পরীক্ষা</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <input type="text" id="searchInput" class="form-control shadow-sm" placeholder="Search exams by Name or Exam category...">
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4  p-4 d-flex flex-column position-static">
-                        <div class="card rounded-0">
-                            <div class="card-body">
-                                <strong class="d-inline-block mb-2 text-success-emphasis">NRBC Bank PLC || Trainee Assistant
-                                    Officer
-                                    (TAO) (26-10-2024)</strong>
-                                <div class="d-flex justify-content-start gap-3 align-items-center">
-                                    <div class="mb-1 text-body-secondary border p-2">Nov 12</div>
-                                    <div class="mb-1 text-body-secondary border p-2">Written</div>
-                                </div>
-                                <div class="d-flex justify-content-between gap-3 align-items-center">
-                                    <a href="{{ route('previousJobExamsQuestion',['type' => 'mcq', 'slug' => 'nrbc-bank-plc']) }}" class="icon-link gap-1 icon-link-hover stretched-link">
-                                        See all Question
-                                    </a>
-                                </div>
-                            </div>
+                
+                        <div class="row" id="examList">
+                            <!-- Exam List Partial -->
+                            @include('custom.pages.previous_exam.partials.exam_list', ['previous_job_exams' => $previous_job_exams])
                         </div>
                     </div>
-                    <div class="col-lg-4  p-4 d-flex flex-column position-static">
-                        <div class="card rounded-0">
-                            <div class="card-body">
-                                <strong class="d-inline-block mb-2 text-success-emphasis">NRBC Bank PLC || Trainee Assistant
-                                    Officer
-                                    (TAO) (26-10-2024)</strong>
-                                <div class="d-flex justify-content-start gap-3 align-items-center">
-                                    <div class="mb-1 text-body-secondary border p-2">Nov 12</div>
-                                    <div class="mb-1 text-body-secondary border p-2">MCQ</div>
-                                </div>
-                                <div class="d-flex justify-content-between gap-3 align-items-center">
-                                    <a href="{{ route('previousJobExamsQuestion',['type' => 'mcq', 'slug' => 'nrbc-bank-plc']) }}" class="icon-link gap-1 icon-link-hover stretched-link">
-                                        See all Question
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Off-Canvas Filter Sidebar -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="filterOffcanvas" aria-labelledby="filterOffcanvasLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="filterOffcanvasLabel">ফিল্টার অপশন</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <h5 class="mb-3">প্রশ্নের ধরন</h5>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="questionType" id="mcq" value="MCQ">
-                <label class="form-check-label" for="mcq">
-                    এমসিকিউ (MCQ)
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="questionType" id="written" value="Written">
-                <label class="form-check-label" for="written">
-                    লিখিত (Written)
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="questionType" id="mcqandwritten" value="MCQandWritten">
-                <label class="form-check-label" for="viva">
-                    এমসিকিউ এবং লিখিত (MCQ & Written)
-                </label>
-            </div>
-            <hr>
-            <!-- Exam Type Title and Select Field -->
-            <h5 class="mt-4 mb-3">পরীক্ষার ধরন</h5>
-            <select class="form-select" aria-label="Select Exam Type">
-                <option selected>পরীক্ষার ধরন নির্বাচন করুন</option>
-                <option value="">BCS পরীক্ষা</option>
-                <option value="">Bank পরীক্ষা</option>
-                <option value="">Teacher পরীক্ষা</option>
-            </select>
-            <hr>
-            <h5 class="mt-4 mb-3">পরীক্ষার সাল</h5>
-            <select class="form-select" aria-label="Select Exam Type">
-                <option selected>পরীক্ষার সাল নির্বাচন করুন</option>
-                <option value="">2019</option>
-                <option value="">2020</option>
-                <option value="">2021</option>
-                <option value="">2022</option>
-                <option value="">2023</option>
-                <option value="">2024</option>
-                <option value="">2025</option>
-
-            </select>
-            <hr>
-            <button class="btn btn-success rounded-0">ফিল্টার করুন</button>
-        </div>
-    </div>
-
-    <!-- Offcanvas -->
-
 @endSection
+
+@section('custom_scripts')
+
+
+<script>
+    $(document).ready(function () {
+        // Handle search input
+        $('#searchInput').on('input', function () {
+            fetchExams($(this).val());
+        });
+        $(document).on('click', '.pagination a', function (e) {
+            e.preventDefault();
+            const page = $(this).attr('href').split('page=')[1];
+            fetchExams($('#searchInput').val(), page);
+        });
+    
+        function fetchExams(query = '', page = 1) {
+            $.ajax({
+                url: "{{ route('previousJobExamsSearch') }}",
+                method: "GET",
+                data: { query: query, page: page },
+                success: function (data) {
+                    $('#examList').html(data);
+                }
+            });
+        }
+    });
+    </script>
+
+
+
+@endsection

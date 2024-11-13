@@ -4,39 +4,59 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::view('/', 'custom.pages.landing');
+// Static Pages
+    Route::view('/', 'custom.pages.landing');
+    Route::view('/about', 'custom.pages.about');
+    Route::view('/contact', 'custom.pages.contact');
 
-// Authentication Route
-Route::get('/login', [AuthController::class,'login'])->name('login');
-Route::post('/login-request', [AuthController::class,'loginRequest'])->name('loginRequest');
-Route::get('/auth/google', [GoogleController::class,'redirectToGoogle'])->name('redirectToGoogle');
-Route::get('/auth/google/callback', [GoogleController::class,'googleCallback'])->name('googleCallback');
-Route::get('/register', [AuthController::class,'register'])->name('register');
-Route::post('/register-request', [AuthController:: class,'registerRequest'])->name('registerRequest');
-// Authentication Route
+    // Authentication Routes
+    Route::get('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/login-request', [AuthController::class, 'loginRequest'])->name('loginRequest');
+    Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('redirectToGoogle');
+    Route::get('/auth/google/callback', [GoogleController::class, 'googleCallback'])->name('googleCallback');
+    Route::get('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/register-request', [AuthController::class, 'registerRequest'])->name('registerRequest');
 
-
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/logout', [AuthController::class,'logout'])->name('logout');
-    Route::get('/profile', [AuthController::class,'profile'])->name('profile');
-    Route::get('/resume', [AuthController::class,'resume'])->name('resume');
-    Route::get('/my-exam', [AuthController::class,'myExam'])->name('myExam');
-});
-
-Route::get('/programming', [ProgrammingController::class,'programming'])->name('programming');
-Route::get('/admission', [AdmissionController::class,'admission'])->name('admission');
-
-Route::group(['prefix' => 'job-solution'], function () {
-    Route::get('/', [JobSolutionController::class, 'jobSolution'])->name('jobSolution');
-});
-
-Route::group(['prefix' => 'previous-job-exams'], function () {
-    Route::get('/', [PreviousJobExamsController::class, 'previousJobExams'])->name('previousJobExams');
-    Route::group(['middleware' => 'auth'], function () {
-        Route::get('{type}/{slug}', [PreviousJobExamsController::class, 'previousJobExamsQuestion'])->name('previousJobExamsQuestion');
+    // Authenticated Routes
+    Route::middleware('auth')->group(function () {
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+        Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+        Route::get('/resume', [AuthController::class, 'resume'])->name('resume');
+        Route::get('/my-exam', [AuthController::class, 'myExam'])->name('myExam');
     });
-});
 
-Route::group(['prefix' => 'exams'], function () {
-    Route::get('/', [ExamController::class, 'exams'])->name('exams');
-});
+    // Public Routes for Specific Pages
+    Route::get('/programming', [ProgrammingController::class, 'programming'])->name('programming');
+    Route::get('/admission', [AdmissionController::class, 'admission'])->name('admission');
+
+    // Job Solution Routes
+    Route::prefix('job-solution')->group(function () {
+        Route::get('/', [FrontendJobSolutionController::class, 'jobSolution'])->name('jobSolution');
+
+        Route::middleware('auth')->group(function () {
+            Route::get('/subject-wise/{slug}/{id}', [FrontendJobSolutionController::class, 'jobSolutionSubjectWise'])->name('jobSolutionSubjectWise');
+            Route::get('/subject-wise-questions/{subject_id}', [FrontendJobSolutionController::class, 'subjectWiseQuestions'])->name('subjectWiseQuestions');
+            Route::get('/lesson-wise-questions/{lesson_id}/{subject_id}', [FrontendJobSolutionController::class, 'lessonWiseQuestions'])->name('lessonWiseQuestions');
+            Route::get('/topic-wise-questions/{topic_id}/{lesson_id}/{subject_id}', [FrontendJobSolutionController::class, 'topicWiseQuestions'])->name('topicWiseQuestions');
+            Route::get('/sub-topic-wise-questions/{sub_topic_id}/{topic_id}/{lesson_id}/{subject_id}', [FrontendJobSolutionController::class, 'subTopicWiseQuestions'])->name('subTopicWiseQuestions');
+            Route::post('/start-exam', [FrontendJobSolutionController::class, 'startExam'])->name('startExam');
+            Route::post('/submit-exam', [FrontendJobSolutionController::class, 'submitExam'])->name('submitExam');
+            Route::get('single-question/{slug}/{id}', [FrontendJobSolutionController::class, 'singleQuestion'])->name('singleQuestion');
+        });
+    });
+
+    // Previous Job Exams Routes
+    Route::prefix('previous-job-exams')->group(function () {
+        Route::get('/', [FrontendPreviousJobExamsController::class, 'previousJobExams'])->name('previousJobExams');
+        Route::get('/previous-exam-search', [FrontendPreviousJobExamsController::class, 'previousJobExamsSearch'])->name('previousJobExamsSearch');
+        Route::middleware('auth')->group(function () {
+            Route::get('questions/{slug}/{id}', [FrontendPreviousJobExamsController::class, 'previousJobExamsQuestion'])->name('previousJobExamsQuestion');
+            Route::get('start-exam/{id}', [FrontendPreviousJobExamsController::class, 'previousJobExamsStartExam'])->name('previousJobExamsStartExam');
+        });
+        
+    });
+
+    // Exams Routes
+    Route::prefix('exams')->group(function () {
+        Route::get('/', [ExamController::class, 'exams'])->name('exams');
+    });

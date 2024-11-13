@@ -1,191 +1,140 @@
-@extends('custom.global.master')
-
+@extends('custom.global.app')
+@section('custom_css')
+    <style>
+        .form-check-input:checked {
+            background-color: #14a814;
+            border-color: #14a814;
+        }
+    </style>
+@endsection
 @section('content')
-    <div class="container-fluid mt-5">
-        <div class="row mb-2 ">
-            <div class="col-lg-3">
-                <div class="row g-0 border overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <h4 class="border-bottom text-center">পিএসসি ও অন্যান্য নিয়োগ পরীক্ষা</h4>
-                        <ul class="list-group">
-                            <li class="list-group-item">১০ম বি সি এস লিখিত পরিক্ষা</li>
-                            <li class="list-group-item">১১ম বি সি এস লিখিত পরিক্ষা</li>
-                            <li class="list-group-item">১২ম বি সি এস লিখিত পরিক্ষা</li>
-                            <li class="list-group-item">১৩ম বি সি এস লিখিত পরিক্ষা</li>
-                            <li class="list-group-item">১৪ম বি সি এস লিখিত পরিক্ষা</li>
-                        </ul>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5" style="margin-bottom: 6rem;">
+        <div class="container py-5">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">বিগত চাকরির পরীক্ষা</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page">About</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+    <div class="container mt-5">
+        <div class="row mb-2">
+            <div class="col-lg-8">
+                <div class="card rounded-0">
+                    <div class="card-header">
+                        <h4>{{ $previous_job_exam->name }}</h4>
+                        <small>Code: {{ $previous_job_exam->exam_code }}</small> |
+                        @php
+                            $hours = floor($previous_job_exam->duration / 60);  // Get the number of full hours
+                            $minutes = $previous_job_exam->duration % 60;  // Get the remaining minutes
+                        @endphp 
+                        <small>Duration: {{ $hours }} hour{{ $hours != 1 ? 's' : '' }} {{ $minutes }} minute{{ $minutes != 1 ? 's' : '' }}</small> |
+                        <small>Question Type: @if ($previous_job_exam->exam_type === 1) MCQ @else Written
+                            
+                        @endif </small>
+                    </div>
+                    <div class="card-body rounded-0">
+                        @php
+                            $groupedQuestions = $previous_job_exam->questions->groupBy('subject_id');
+                        @endphp
+                        <div class="d-flex justify-content-start gap-1 flex-lg-row flex-column">
+                            <button href="#" class="btn btn-sm btn-outline-info"
+                                style="border-radius: 0; padding:5px 16px;" onclick="showAllQuestions()">All</button>
+                            @foreach ($groupedQuestions as $subjectId => $questions)
+                                @php
+                                    $subjectName = $questions->first()->subject->name ?? 'Unknown Subject';
+                                @endphp
+                                <button href="#" class="btn btn-sm btn-outline-info"
+                                    style="border-radius: 0; padding:5px 16px;"
+                                    onclick="filterQuestions({{ $subjectId }})">{{ $subjectName }}</button>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-2 rounded-0">
+                    <div class="card-header d-flex justify-content-between">
+                        <h4 class="card-title m-0">All Questions</h4>
+                        <a href="{{ route('previousJobExamsStartExam',['id' => encrypt($previous_job_exam->id)]) }}" class="btn btn-primary rounded-0" style="padding: 5px 16px;" type="button">
+                             যাচাই করুন
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="row" id="questionContainer">
+                            @foreach ($previous_job_exam->questions as $question)
+                                <div class="col-lg-6 col-12 question-card" data-subject-id="{{ $question->subject_id }}">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <p class="m-0">## {{ $question->question_text }}</p>
+                                            <div class="question-options ml-4 mt-2">
+                                                @foreach ($question->options as $option)
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            id="option{{ $option->id }}"
+                                                            name="question{{ $question->id }}" value="{{ $option->id }}"
+                                                            @if ($option->is_correct) checked @endif>
+                                                        <label class="form-check-label" for="option{{ $option->id }}">
+                                                            {{ $option->option_text }}
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9">
+            <div class="col-lg-4">
                 <div class="card rounded-0">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h3 >NRBC Bank PLC || Trainee Assistant </h3>
-                        <div>
-                            <button class="btn btn-primary rounded-0" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#takeExamFilterOffcanvas" aria-controls="takeExamFilterOffcanvas">
-                            Start Exam
-                        </button>
-                        </div>
-                        
+                    <div class="card-header">
+                        <h4 class="m-0">Related Exams</h4>
                     </div>
-                    <div class="card-body rounded-0">
-                        <div class="d-flex justify-content-between  gap-4 flex-lg-row flex-column">
-                            <a href="" class="btn btn-sm btn-outline-info w-100 active">All</a>
-                            <a href="" class="btn btn-sm btn-outline-info w-100 ">বাংলা</a>
-                            <a href="" class="btn btn-sm btn-outline-info w-100 ">English</a>
-                            <a href="" class="btn btn-sm btn-outline-info w-100 ">গনিত</a>
-                            <a href="" class="btn btn-sm btn-outline-info w-100 ">তথ্য প্রযুক্তি</a>
-                            <a href="" class="btn btn-sm btn-outline-info w-100 ">সাধারন জ্ঞান</a>
-                        </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            @forelse ($related_exams as $related_exam)
+                            @php
+                                $related_exam_id = encrypt($related_exam->id);
+                                $related_exam_slug = encrypt($related_exam->slug);
+                            @endphp
+                                <li class="list-group-item">
+                                    <a href="{{ route('previousJobExamsQuestion', ['slug' => $related_exam_slug, 'id' => $related_exam_id]) }}">
+                                        <i class="fa fa-book"></i>
+                                        {{ \Illuminate\Support\Str::limit($related_exam->name, 45) }}
+                                    </a>
+                                </li>
+                            @empty
+                                <li class="list-group-item">No related exams available</li>
+                            @endforelse
+                        </ul>
                     </div>
                     
                 </div>
-                <div class="card mt-2 rounded-0">
-                    <div class="card-header">
-                        <h4 class="card-title text-center">বাংলা</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6 mt-2 mb-2 border-bottom">
-                                <p>1. চন্দ্র শব্দের চারটি প্রতিশব্দ লিখুন।</p>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            Default radio 1
-                                        </label>
-                                    </div>
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault2">
-                                        <label class="form-check-label" for="flexRadioDefault2">
-                                            Default radio 2
-                                        </label>
-                                    </div>
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault3">
-                                        <label class="form-check-label" for="flexRadioDefault3">
-                                            Default radio 3
-                                        </label>
-                                    </div>
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault4">
-                                        <label class="form-check-label" for="flexRadioDefault4">
-                                            Default radio 4
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                            <div class="col-lg-6 mt-2 mb-2 border-bottom">
-                                <p>1. চন্দ্র শব্দের চারটি প্রতিশব্দ লিখুন।</p>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefaulta"
-                                            id="flexRadioDefault1">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            Default radio 1
-                                        </label>
-                                    </div>
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefaulta"
-                                            id="flexRadioDefault2">
-                                        <label class="form-check-label" for="flexRadioDefault2">
-                                            Default radio 2
-                                        </label>
-                                    </div>
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefaulta"
-                                            id="flexRadioDefault3">
-                                        <label class="form-check-label" for="flexRadioDefault3">
-                                            Default radio 3
-                                        </label>
-                                    </div>
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefaulta"
-                                            id="flexRadioDefault4">
-                                        <label class="form-check-label" for="flexRadioDefault4">
-                                            Default radio 4
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mt-2 mb-2 border-bottom">
-                                <p>1. চন্দ্র শব্দের চারটি প্রতিশব্দ লিখুন।</p>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefaultb"
-                                            id="flexRadioDefault1">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            Default radio 1
-                                        </label>
-                                    </div>
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefaultb"
-                                            id="flexRadioDefault2">
-                                        <label class="form-check-label" for="flexRadioDefault2">
-                                            Default radio 2
-                                        </label>
-                                    </div>
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefaultb"
-                                            id="flexRadioDefault3">
-                                        <label class="form-check-label" for="flexRadioDefault3">
-                                            Default radio 3
-                                        </label>
-                                    </div>
-                                    <div class="form-check col-lg-6 col-12">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefaultb"
-                                            id="flexRadioDefault4">
-                                        <label class="form-check-label" for="flexRadioDefault4">
-                                            Default radio 4
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-
-
-                    </div>
-
-                </div>
             </div>
+            
         </div>
-    </div>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="takeExamFilterOffcanvas" aria-labelledby="takeExamFilterOffcanvasLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="takeExamFilterOffcanvasLabel">পরীক্ষা প্রস্তুতি</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-                <div class="mb-3">
-                    <label for="questionCount" class="form-label">প্রশ্ন সংখ্যা</label>
-                    <input type="number" class="form-control" id="questionCount" name="question_count" value="60">
-                </div>
-                <div class="mb-3">
-                    <label for="examDuration" class="form-label">পরীক্ষার সময় (মিনিট)</label>
-                    <input type="number" class="form-control" id="examDuration" name="exam_duration" value="60">
-                </div>
-                <div class="mb-3">
-                    <label for="passMark" class="form-label">পাস মার্ক</label>
-                    <input type="number" class="form-control" id="passMark" name="pass_mark" value="25">
-                </div>
-                <div class="mb-3">
-                    <label for="negativeMark" class="form-label">নেগেটিভ মার্ক</label>
-                    <input type="number" step="0.1" class="form-control" id="negativeMark" name="negative_mark" value="0.5">
-                </div>
-                <div class="mb-3">
-                    <label for="questionValue" class="form-label">প্রতিটি প্রশ্নের মান</label>
-                    <input type="number" class="form-control" id="questionValue" name="question_value" value="1">
-                </div>
-                <button type="submit" class="btn btn-success rounded-0">পরীক্ষা শুরু করুন</button>
-           
-        </div>
-        
     </div>
 @endSection
+
+@section('custom_scripts')
+    <script>
+        // Function to show all questions
+        function showAllQuestions() {
+            $('.question-card').show();
+        }
+
+        // Function to filter questions by subject
+        function filterQuestions(subjectId) {
+            $('.question-card').each(function() {
+                $(this).toggle($(this).data('subject-id') == subjectId);
+            });
+        }
+    </script>
+@endsection

@@ -24,6 +24,7 @@
     <link href="{{ asset('backend/vendor/pickadate/themes/default.css') }}" rel="stylesheet">
 
     <link href="{{ asset('backend/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
 
     <style>
         a.active{

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enum\UserRole;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +17,14 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, $guard = null): Response
     {
-        // Check if the user is authenticated
         if (Auth::guard($guard)->check()) {
-            return redirect()->route('adminDashboard');
+            if (Auth::user()->role == UserRole::ADMIN->value) {
+                return redirect()->route('adminDashboard');
+            }
+            return redirect()->route('login');
         }
 
+        // If the user is not authenticated, continue with the request
         return $next($request);
     }
 }

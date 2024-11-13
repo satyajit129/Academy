@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enum\UserRole;
 use App\Models\User;
+use App\Models\UserCustomExam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -91,6 +92,16 @@ class AuthController extends Controller
     }
     public function myExam()
     {
-        return view('custom.pages.auth.my-exam');
+        $user_custom_exams = UserCustomExam::where('user_id', Auth::user()->id)->get();
+        // Cast `final_score` and `cut_marks` to integers for accurate comparison
+        $passed_count = $user_custom_exams->filter(function($exam) {
+            return (int)$exam->final_score >= (int)$exam->cut_marks;
+        })->count();
+
+        $failed_count = $user_custom_exams->filter(function($exam) {
+            return (int)$exam->final_score < (int)$exam->cut_marks;
+        })->count();
+        
+        return view('custom.pages.auth.my-exam', compact('user_custom_exams', 'passed_count', 'failed_count'));
     }
 }

@@ -16,5 +16,14 @@ class SubjectTopic extends Model
     {
         return $this->belongsTo(SubjectLesson::class , 'lesson_id');
     }
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'topic_id');
+    }
+
+    public function subTopics()
+    {
+        return $this->hasMany(SubjectSubTopic::class, 'topic_id');
+    }
     
 }

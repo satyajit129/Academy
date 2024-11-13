@@ -24,6 +24,7 @@
                                 <tr>
                                     <th>SL</th>
                                     <th>Name</th>
+                                    <th>Category</th>
                                     <th>Code</th>
                                     <th>Year</th>
                                     <th>Date</th>
@@ -38,6 +39,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $previous_exam->name }}</td>
+                                        <td>{{ $previous_exam->category->name }}</td>
                                         <td>{{ $previous_exam->exam_code }}</td>
                                         <td>{{ $previous_exam->year->year }}</td>
                                         <td>{{ $previous_exam->exam_date ? \Carbon\Carbon::parse($previous_exam->exam_date)->format('m/d/Y') : 'N/A' }}</td>
