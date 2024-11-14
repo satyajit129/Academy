@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PreviousExam;
 use App\Models\PreviousExamCategory;
+use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -36,7 +37,7 @@ class FrontendPreviousJobExamsController extends Controller
         $decrypted_slug = decrypt($slug);
 
         // Load the exam with paginated questions
-        $previous_job_exam = PreviousExam::with(['category','questions'])
+        $previous_job_exam = PreviousExam::with(['category', 'questions'])
             ->where('slug', $decrypted_slug)
             ->where('id', $decrypted_id)
             ->first();
@@ -62,21 +63,99 @@ class FrontendPreviousJobExamsController extends Controller
             ->whereHas('questions')
             ->where(function ($queryBuilder) use ($queryInput) {
                 $queryBuilder->where('name', 'like', '%' . $queryInput . '%')
-                            ->orWhereHas('category', function ($categoryQuery) use ($queryInput) {
-                                // Search in category name
-                                $categoryQuery->where('name', 'like', '%' . $queryInput . '%');
-                            });
+                    ->orWhereHas('category', function ($categoryQuery) use ($queryInput) {
+                        // Search in category name
+                        $categoryQuery->where('name', 'like', '%' . $queryInput . '%');
+                    });
             })
             ->paginate(2);
 
 
         return view('custom.pages.previous_exam.partials.exam_list', compact('previous_job_exams'))->render();
     }
-    public function previousJobExamsStartExam($id){
+    public function previousJobExamsStartExam($id)
+    {
         $decrypted_id = decrypt($id);
         $previous_job_exam = PreviousExam::with('questions.options', 'category')->find($decrypted_id);
-
+        // dd($previous_job_exam);
         return view('custom.pages.previous_exam.start-exam', compact('previous_job_exam'));
     }
+    public function previousJobExamSubmit(Request $request)
+    {
+        
+        $answers = $request->input('answers');
+        $previous_job_exam = PreviousExam::with('questions.options', 'category')->find($request->previous_exam_id);
+
+        // Initialize scoring variables
+        $total_marks = $request->input('total_marks');
+        $correct_answers = 0;
+        $incorrect_answers = 0;
+        $score = 0;
+
+        // Array to hold question details with selected and correct answers
+        $questions_details = [];
+
+        // Loop through each question and check the answer
+        foreach ($answers as $question_id => $answer_id) {
+            $question = Question::with('options')->find($question_id);
+
+            if ($question) {
+                $is_correct = false;
+                $correct_option_id = null;
+
+                // Check each option to find the correct answer
+                foreach ($question->options as $option) {
+                    if ($option->is_correct) {
+                        $correct_option_id = $option->id;
+                    }
+                    if ($option->is_correct && $option->id == $answer_id) {
+                        $is_correct = true;
+                        $correct_answers++;
+                        break;
+                    }
+                }
+
+                if (!$is_correct) {
+                    $incorrect_answers++;
+                }
+
+                // Store question details
+                $questions_details[] = [
+                    'question' => $question,
+                    'selected_answer' => $answer_id,
+                    'correct_answer' => $correct_option_id,
+                    'is_correct' => $is_correct,
+                ];
+            } else {
+                $incorrect_answers++;
+            }
+        }
+
+        $score = $correct_answers;
+
+        return $this->previousJobExamSolution(
+            $previous_job_exam,
+            $total_marks,
+            $correct_answers,
+            $incorrect_answers,
+            $previous_job_exam->negative_mark,
+            $score,
+            $questions_details
+        );
+    }
+
+    public function previousJobExamSolution($previous_job_exam, $total_marks, $correct_answers, $incorrect_answers, $negative_mark, $score, $questions_details)
+    {
+        return view('custom.pages.previous_exam.exam-solution-with-result', [
+            'previous_job_exam' => $previous_job_exam,
+            'total_marks' => $total_marks,
+            'correct_answers' => $correct_answers,
+            'incorrect_answers' => $incorrect_answers,
+            'negative_mark' => $negative_mark,
+            'score' => $score,
+            'questions_details' => $questions_details,
+        ]);
+    }
+
 
 }

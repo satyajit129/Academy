@@ -63,10 +63,10 @@
                         </p>
                     </div>
                 </div>
-                <form action="{{ route('submitExam') }}" method="POST" id="exam-form">
+                <form action="{{ route('previousJobExamSubmit') }}" method="POST" id="exam-form">
+                    <input type="hidden" value="{{ $previous_job_exam->id }}" name="previous_exam_id">
                     @csrf
                     <div class="card-body">
-                        
                         @foreach ($previous_job_exam->questions as $index =>  $question)
                         
                             <div class="question mb-4">

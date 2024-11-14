@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('/sub-topic-wise-questions/{sub_topic_id}/{topic_id}/{lesson_id}/{subject_id}', [FrontendJobSolutionController::class, 'subTopicWiseQuestions'])->name('subTopicWiseQuestions');
             Route::post('/start-exam', [FrontendJobSolutionController::class, 'startExam'])->name('startExam');
             Route::post('/submit-exam', [FrontendJobSolutionController::class, 'submitExam'])->name('submitExam');
-            Route::get('single-question/{slug}/{id}', [FrontendJobSolutionController::class, 'singleQuestion'])->name('singleQuestion');
+            Route::get('/single-question/{slug}/{id}', [FrontendJobSolutionController::class, 'singleQuestion'])->name('singleQuestion');
         });
     });
 
@@ -50,8 +50,10 @@ use Illuminate\Support\Facades\Route;
         Route::get('/', [FrontendPreviousJobExamsController::class, 'previousJobExams'])->name('previousJobExams');
         Route::get('/previous-exam-search', [FrontendPreviousJobExamsController::class, 'previousJobExamsSearch'])->name('previousJobExamsSearch');
         Route::middleware('auth')->group(function () {
-            Route::get('questions/{slug}/{id}', [FrontendPreviousJobExamsController::class, 'previousJobExamsQuestion'])->name('previousJobExamsQuestion');
-            Route::get('start-exam/{id}', [FrontendPreviousJobExamsController::class, 'previousJobExamsStartExam'])->name('previousJobExamsStartExam');
+            Route::get('/questions/{slug}/{id}', [FrontendPreviousJobExamsController::class, 'previousJobExamsQuestion'])->name('previousJobExamsQuestion');
+            Route::get('/start-exam/{id}', [FrontendPreviousJobExamsController::class, 'previousJobExamsStartExam'])->name('previousJobExamsStartExam');
+            Route::post('/submit-exam',[FrontendPreviousJobExamsController::class,'previousJobExamSubmit'])->name('previousJobExamSubmit');
+            Route::get('/exam-solution',[FrontendPreviousJobExamsController::class,'previousJobExamSolution'])->name('previousJobExamSolution');
         });
         
     });
