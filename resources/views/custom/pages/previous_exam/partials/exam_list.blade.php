@@ -5,12 +5,16 @@
         $encryptedSlug = encrypt($previous_job_exam->slug);
     @endphp
     <div class="col-lg-6 col-md-6 col-sm-12 col-12 exam-item">
-        <div class="card shadow-sm border-light rounded-0">
+        <div class="card shadow-sm border-light rounded-0 position-relative custom-card">
+            <span class="custom-badge">
+                {{ $previous_job_exam->questions->count() }}
+                <span class="visually-hidden">Total questions</span>
+            </span>
             <div class="card-body">
-                <h5 class="card-title text-success fw-bold exam-name mb-2">
+                <h6 class="card-title text-success fw-bold exam-name mb-2">
                     {{ \Illuminate\Support\Str::limit($previous_job_exam->name, 50) }}
-                    <span class="badge bg-success">{{ $previous_job_exam->questions->count() }}</span>
-                </h5>
+                    
+                </h6>
                 <div class="d-flex justify-content-start gap-2 align-items-center mb-3">
                     <small class="text-muted">
                         {{ Carbon\Carbon::parse($previous_job_exam->exam_date)->format('j F Y') }}

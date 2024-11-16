@@ -62,7 +62,8 @@ class CustomExamsController extends Controller
         $exam_type = $request->input('exam_type');
         $exam_name = $request->input('name');
         $number_of_questions = $request->input('number_of_questions');
-
+        $exam_duration = $request->exam_duration;
+        $negative_marks = $request->negative_marks;
         $questions_by_category = [];
         $total_number_of_questions = 0;
         $author_id = Auth::user()->id;
@@ -79,8 +80,6 @@ class CustomExamsController extends Controller
             $questions_by_category[$category_id] = $questions;
             $total_number_of_questions += $question_limit;
         }
-        $start_datetime = $this->formatDateTime($request->start_datetime);
-        $end_datetime = $this->formatDateTime($request->end_datetime);
         $slug = $this->generateUniqueSlug($exam_name, CustomExam::class);
         $passing_marks = $this->calculatePassingMark($total_number_of_questions);
         $create_custom_exam = CustomExam::create([
@@ -89,9 +88,9 @@ class CustomExamsController extends Controller
             'exam_type' => $exam_type,
             'exam_taker' => $author_id,
             'number_of_questions' => $total_number_of_questions,
+            'exam_duration' => $exam_duration,
+            'negative_marks' => $negative_marks,
             'passing_marks' => $passing_marks,
-            'start_datetime' => $start_datetime,
-            'end_datetime' => $end_datetime,
         ]);
         if ($create_custom_exam) {
             $this->saveQuestions($questions_by_category, $create_custom_exam->id);

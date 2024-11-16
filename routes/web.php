@@ -59,6 +59,10 @@ use Illuminate\Support\Facades\Route;
     });
 
     // Exams Routes
-    Route::prefix('exams')->group(function () {
+    Route::prefix('custom-exams')->group(function () {
         Route::get('/', [ExamController::class, 'exams'])->name('exams');
+        Route::get('/exam-search', [ExamController::class, 'customExamsSearch'])->name('customExamsSearch');
+        Route::middleware('auth')->group(function () {
+            Route::get('/questions/{id}/{slug}', [ExamController::class, 'customExamsquestions'])->name('customExamsquestions');
+        });
     });

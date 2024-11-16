@@ -114,7 +114,6 @@
           var minutes = Math.floor(time / 60);
           var seconds = time % 60;
   
-          // Format time as MM:SS
           $('#exam-timer').text(minutes + ':' + (seconds < 10 ? '0' : '') + seconds);
   
           if (time <= 0) {
@@ -136,12 +135,12 @@
             positionClass: 'toast-top-right',
             closeButton: true,
             progressBar: true,
-            timeOut: 5000, // Time in milliseconds before the toast disappears
-            extendedTimeOut: 1000, // Time for toast animation before disappearing
-            preventDuplicates: true, // Prevent multiple toasts for the same message
-            newestOnTop: true, // Show newest toast on top
+            timeOut: 5000, 
+            extendedTimeOut: 1000, 
+            preventDuplicates: true, 
+            newestOnTop: true, 
             progressBar: true,
-            closeHtml: '<button><i class="fa fa-times"></i></button>', // Custom close button
+            closeHtml: '<button><i class="fa fa-times"></i></button>',
         });
     @endforeach
 </script>

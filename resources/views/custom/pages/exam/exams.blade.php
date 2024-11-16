@@ -7,26 +7,63 @@
             /* semi-transparent black */
             border-radius: 50%;
         }
+
+        .exam-item .card {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .exam-item .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .exam-item .exam-name {
+            color: #28a745;
+        }
+
+        #searchInput {
+            border: 2px solid #28a745;
+        }
+
+        .custom-card {
+            position: relative;
+            overflow: hidden;
+            /* Ensures elements stay inside the card */
+        }
+
+        .custom-badge {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            background-color: #6c757d;
+            color: #fff;
+            font-size: 0.9rem;
+            padding: 0.5em 0.5em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            transform: translate(50%, -50%);
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 @endsection
 @section('content')
-<!-- Page Header Start -->
-<div class="container-fluid page-header py-5" style="margin-bottom: 6rem;">
-    <div class="container py-5">
-        <h1 class="display-3 text-white mb-3 animated slideInDown">বিগত চাকরির পরীক্ষা</h1>
-        <nav aria-label="breadcrumb animated slideInDown">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-                <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-                <li class="breadcrumb-item text-white active" aria-current="page">About</li>
-            </ol>
-        </nav>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5" style="margin-bottom: 6rem;">
+        <div class="container py-5">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">বিগত চাকরির পরীক্ষা</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page">About</li>
+                </ol>
+            </nav>
+        </div>
     </div>
-</div>
-<!-- Page Header End -->
-    <div class="container-fluid mt-5">
+    <!-- Page Header End -->
+    <div class="container mt-5">
         <div class="row mb-2 align-items-center">
             <h2 class="text-center border-bottom">পরীক্ষা</h2>
             <h4>সেরা 10 পারফর্মার</h4>
@@ -104,57 +141,16 @@
                         <h4 class="card-title">পরীক্ষা সমূহ</h4>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-
-                            <div class="col-lg-4 col-12">
-                                <div class="card rounded-0 position-relative">
-                                    <div class="card-body">
-                                        <h6>মডেল টেস্ট ৪৭</h6>
-                                        <div class="d-flex align-items-center justify-content-start gap-2">
-                                            <p class="border p-2">২০ প্রশ্ন</p>
-                                            <p class="border p-2">২০ মার্ক</p>
-                                            <p class="border p-2">১০ মিনিট</p>
-                                        </div>
-                                        <p>পরীক্ষক : Satyajit </p>
-                                        <p>বিষয় : <span class="badge text-bg-secondary">Bangla</span> <span class="badge text-bg-secondary">English</span> </p>
-                                    </div>
-                                    <span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
-                                    </span>
-                                </div>
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <input type="text" id="searchInput" class="form-control shadow-sm"
+                                    placeholder="Search exams by Name or Exam category...">
                             </div>
-                            <div class="col-lg-4 col-12">
-                                <div class="card rounded-0 position-relative">
-                                    <div class="card-body">
-                                        <h6>মডেল টেস্ট ৪৭</h6>
-                                        <div class="d-flex align-items-center justify-content-start gap-2">
-                                            <p class="border p-2">২০ প্রশ্ন</p>
-                                            <p class="border p-2">২০ মার্ক</p>
-                                            <p class="border p-2">১০ মিনিট</p>
-                                        </div>
-                                        <p>পরীক্ষক : Satyajit </p>
-                                        <p>বিষয় : <span class="badge text-bg-secondary">Bangla</span> <span class="badge text-bg-secondary">English</span> </p>
-                                    </div>
-                                    <span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-12">
-                                <div class="card rounded-0 position-relative">
-                                    <div class="card-body">
-                                        <h6>মডেল টেস্ট ৪৭</h6>
-                                        <div class="d-flex align-items-center justify-content-start gap-2">
-                                            <p class="border p-2">২০ প্রশ্ন</p>
-                                            <p class="border p-2">২০ মার্ক</p>
-                                            <p class="border p-2">১০ মিনিট</p>
-                                        </div>
-                                        <p>পরীক্ষক : Satyajit </p>
-                                        <p>বিষয় : <span class="badge text-bg-secondary">Bangla</span> <span class="badge text-bg-secondary">English</span> </p>
-                                    </div>
-                                    <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-                                    </span>
-                                    <a href="" class="stretched-link"></a>
-                                </div> 
-                            </div>
+                        </div>
+                        <div class="row" id="examList">
+                            @include('custom.pages.exam.partials.exam_list', [
+                                'custom_exams' => $custom_exams,
+                            ])
                         </div>
                     </div>
                 </div>
@@ -186,6 +182,34 @@
                     }
                 }
             });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Handle search input
+            $('#searchInput').on('input', function() {
+                fetchExams($(this).val());
+            });
+            $(document).on('click', '.pagination a', function(e) {
+                e.preventDefault();
+                const page = $(this).attr('href').split('page=')[1];
+                fetchExams($('#searchInput').val(), page);
+            });
+
+            function fetchExams(query = '', page = 1) {
+                $.ajax({
+                    url: "{{ route('customExamsSearch') }}",
+                    method: "GET",
+                    data: {
+                        query: query,
+                        page: page
+                    },
+                    success: function(data) {
+                        $('#examList').html(data);
+                    }
+                });
+            }
         });
     </script>
 @endsection
