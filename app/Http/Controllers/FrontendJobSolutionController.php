@@ -164,7 +164,6 @@ class FrontendJobSolutionController extends Controller
 
     public function submitExam(Request $request)
     {
-        // dd($request->negative_marks);
         try {
             $validated = $request->validate([
                 'total_marks' => 'required|numeric',
@@ -209,8 +208,6 @@ class FrontendJobSolutionController extends Controller
 
             $user_answer = isset($request->answers[$question_id]) ? $request->answers[$question_id] : null;
             $correct_answer = $this->getCorrectAnswer($question_id);
-
-            // Initialize $is_correct before checking the answer
             $is_correct = false;
 
             if ($user_answer !== null) {
@@ -223,8 +220,6 @@ class FrontendJobSolutionController extends Controller
                 $total_answered++;
             }
 
-            Log::info($correct_answer);
-
             $user_custom_questions[] = [
                 'user_custom_exam_id' => $user_custom_exam_id,
                 'question_id' => $question_id,
@@ -232,10 +227,8 @@ class FrontendJobSolutionController extends Controller
                 'is_correct' => $is_correct,
                 'correct_answer' => $correct_answer
             ];
-
         }
 
-        // Insert the answers into the UserCustomExamQuestion table
         UserCustomExamQuestion::insert($user_custom_questions);
 
         // Calculate total score and negative marks

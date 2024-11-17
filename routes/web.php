@@ -64,5 +64,8 @@ use Illuminate\Support\Facades\Route;
         Route::get('/exam-search', [ExamController::class, 'customExamsSearch'])->name('customExamsSearch');
         Route::middleware('auth')->group(function () {
             Route::get('/questions/{id}/{slug}', [ExamController::class, 'customExamsquestions'])->name('customExamsquestions');
+            Route::post('submit-ecam',[ExamController::class,'customExamSubmit'])->name('customExamSubmit');
+            Route::get('/download-question-pdf',[PDFController::class,'downloadQuestionPdf'])->name('downloadQuestionPdf');
+            Route::get('/see-all-performer',[ExamController::class,'seeAllPerformer'])->name('seeAllPerformer');
         });
     });

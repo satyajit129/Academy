@@ -129,7 +129,7 @@
                     </div>
                 </div>
             </div>
-            <div class=" p-3 " style="text-align: right;">
+            <div class="p-3 " style="text-align: right;">
                 <a href="#" class="btn btn-outline-primary rounded-0">সকল পারফর্মার দেখুন</a>
             </div>
         </div>

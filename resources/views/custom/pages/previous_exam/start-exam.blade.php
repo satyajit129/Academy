@@ -123,7 +123,7 @@
       }
       startTimer();
     });
-  </script>
+</script>
 
 @if ($errors->any())
 <script>

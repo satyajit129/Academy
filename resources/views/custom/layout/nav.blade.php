@@ -16,7 +16,8 @@
             <a href="{{ route('previousJobExams') }}"
             class="nav-item nav-link {{ Route::is('previousJobExams', 'previousJobExamsQuestion') ? 'active' : '' }}">Previous Job Exams</a>         
             <a href="{{ route('exams') }}"
-                class="nav-item nav-link @if (request()->route()->getName() == 'exams') active @endif">Test(Exams)</a>
+                class="nav-item nav-link {{ Route::is('exams', 'customExamsSearch', 'customExamsquestions') ? 'active' : '' }}">Test(Exams)</a>
+
                 
 
             @if (Auth::check())
