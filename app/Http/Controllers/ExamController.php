@@ -6,19 +6,27 @@ use App\Models\CustomExam;
 use App\Models\CustomExamResult;
 use App\Models\Question;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class ExamController extends Controller
 {
+
+
     public function exams()
     {
-        $custom_exams = $this->getExamsQuery()
-            ->paginate(2);
-
-        return view('custom.pages.exam.exams', compact('custom_exams'));
+        $top_performers = CustomExamResult::select('user_id', DB::raw('SUM(total_marks) as total_marks'))
+            ->with('userInfo')
+            ->groupBy('user_id')
+            ->orderBy('total_marks', 'desc')
+            ->limit(10)
+            ->get();
+        $custom_exams = $this->getExamsQuery()->paginate(2);
+        return view('custom.pages.exam.exams', compact('custom_exams', 'top_performers'));
     }
 
     public function customExamsSearch(Request $request)
@@ -55,20 +63,27 @@ class ExamController extends Controller
     }
     public function customExamSubmit(Request $request)
     {
+        // dd($request->all());
         try {
-            $validated = $request->validate([
-                'custom_exam_id' => 'required',
-                'answers' => [
-                    'required',
-                    'array',
-                    function ($attribute, $value, $fail) {
-                        if (!collect($value)->filter()->count()) {
-                            $fail('At least one answer is required.');
-                        }
-                    },
+            $validated = $request->validate(
+                [
+                    'custom_exam_id' => 'required',
+                    'answers' => [
+                        'required',
+                        'array',
+                        function ($attribute, $value, $fail) {
+                            if (!collect($value)->filter()->count()) {
+                                $fail('At least one answer is required.');
+                            }
+                        },
+                    ],
+                    'answers.*' => 'nullable',
                 ],
-                'answers.*' => 'nullable',
-            ]);
+                [
+                    'answers.required' => 'উত্তরপত্র জমা দিতে আপনাকে কমপক্ষে একটি প্রশ্নের উত্তর করতে হবে।'
+                ]
+            );
+
 
             $user_id = Auth::user()->id;
             $custom_exam_id = $request->custom_exam_id;
@@ -77,27 +92,17 @@ class ExamController extends Controller
             $exam_result = CustomExamResult::where('user_id', $user_id)
                 ->where('custom_exam_id', $custom_exam_id)
                 ->first();
-
-            // Fetch the custom exam details
             $custom_exam_info = CustomExam::find($custom_exam_id);
-
-            // Check the questions and calculate the total marks
             $check_question = $this->checkQuestions($request->answers);
             $total_marks_data = $this->getTotalMarks($check_question, $custom_exam_info->negative_marks, $custom_exam_info->number_of_questions);
-
-            // Maximum allowed attempts
             $max_attempts = 3;
-
-            // If the exam result already exists, check the number of attempts
             if ($exam_result) {
                 if ($exam_result->attempts >= $max_attempts) {
-                    // Prevent submitting if the maximum number of attempts is reached
                     return response()->json([
-                        'message' => 'Maximum attempts reached. You cannot attempt the exam more than 3 times.',
-                    ], 400); // 400 Bad Request
+                        'message' => 'আপনি ইতিমধ্যে সর্বোচ্চ ৩ বার প্রচেষ্টা সম্পন্ন করে ফেলেছেন।',
+                    ], 400);
                 }
 
-                // Otherwise, update the exam result
                 $exam_result->update([
                     'attempts' => $exam_result->attempts + 1,
                     'total_marks' => $total_marks_data['total_mark'],
@@ -115,7 +120,6 @@ class ExamController extends Controller
                     'all_question_with_user_answer' => $check_question['all_question_with_user_answer'],
                 ]);
             } else {
-                // Create a new exam result if no record exists
                 $custom_exam_result_created = CustomExamResult::create([
                     'user_id' => $user_id,
                     'custom_exam_id' => $custom_exam_id,
@@ -137,7 +141,11 @@ class ExamController extends Controller
             }
 
         } catch (ValidationException $e) {
+            Log::info($e->errors());
             return response()->json(['errors' => $e->errors()], 422);
+        } catch (Exception $ex) {
+            Log::info($ex->getMessage());
+            return response()->json(['errors' => $ex->getMessage()], 200);
         }
     }
 
@@ -195,4 +203,27 @@ class ExamController extends Controller
             'is_passed' => $is_passed
         ];
     }
+    private function getAllPerformersQuery()
+    {
+        return CustomExamResult::select('user_id')
+            ->with('userInfo')
+            ->selectRaw('SUM(total_marks) as total_marks')
+            ->selectRaw('SUM(total_correct) as total_correct')
+            ->selectRaw('SUM(total_wrong) as total_wrong')
+            ->selectRaw('SUM(total_answered) as total_answered')
+            ->groupBy('user_id')
+            ->orderByDesc('total_marks');
+    }
+    public function seeAllPerformer(Request $request)
+    {
+        $all_performers = $this->getAllPerformersQuery()->paginate(10);
+        return view('custom.pages.exam.all_performers', compact('all_performers'));
+    }
+
+    public function seeAllPerformerData(Request $request)
+    {
+        $all_performers = $this->getAllPerformersQuery()->paginate(10);
+        return view('custom.pages.exam.partials.all_performers_list', compact('all_performers'))->render();
+    }
+
 }

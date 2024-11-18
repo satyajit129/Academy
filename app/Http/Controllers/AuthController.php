@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Enum\UserRole;
 use App\Models\User;
 use App\Models\UserCustomExam;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -79,8 +81,160 @@ class AuthController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        return view('custom.pages.auth.profile', compact('user'));
+        if ($user) {
+            $education = json_decode($user->education, true);
+            $experience = json_decode($user->experience, true);
+            $languages = json_decode($user->language, true);
+            $socialLinks = json_decode($user->social_links, true);
+        }
+        // dd($education, $experience, $languages, $socialLinks);
+        return view('custom.pages.auth.profile', compact('user', 'education', 'experience', 'languages', 'socialLinks'));
     }
+    public function profileEdit(Request $request)
+    {
+        $user_id = request('userId');
+        $user_info = User::find($user_id);
+        return view('custom.pages.auth.profile_edit', compact('user_info'));
+    }
+    public function profileUpdate(Request $request, $id)
+    {
+        // dd('okkk');
+        try {
+            $request->validate([
+                'name' => 'required',
+                'phone' => 'required',
+                'address' => 'required',
+                'date_of_birth' => 'required|date',
+                'gender' => 'required|in:1,2,3',
+                'nationality' => 'required',
+                'career_objective' => 'nullable',
+            ]);
+
+            $user = User::find($id);
+            if (!$user) {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+
+            $user->name = $request->input('name');
+            $user->phone = $request->input('phone');
+            $user->address = $request->input('address');
+            $user->date_of_birth = $request->input('date_of_birth');
+            $user->gender = $request->input('gender');
+            $user->nationality = $request->input('nationality');
+            $user->career_objective = $request->input('career_objective');
+            $user->save();
+
+            return redirect()->back()->with('success', 'Profile updated successfully');
+
+        } catch (ValidationException $e) {
+
+            return redirect()->back()->withErrors($e->errors())->withInput();
+
+        } catch (Exception $e) {
+            Log::info($e->getMessage());
+            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
+        }
+    }
+
+    public function additionalInfoEdit(Request $request)
+    {
+        $data = $request->data;
+        return view('custom.pages.auth.additional_info_edit', compact('data'));
+    }
+
+    public function additionalInfoUpdate(Request $request, $id)
+    {
+        $validationRules = [
+            'education' => [
+                'degree' => 'required|array',
+                'degree.*' => 'required|string',
+                'year' => 'required|array',
+                'year.*' => 'required|string',
+                'grade_point' => 'required|array',
+                'grade_point.*' => 'required|string',
+            ],
+            'experience' => [
+                'company_name' => 'required|array',
+                'company_name.*' => 'required|string',
+                'position' => 'required|array',
+                'position.*' => 'required|string',
+                'start_date' => 'required|array',
+                'start_date.*' => 'required|string',
+                'end_date' => 'required|array',
+                'end_date.*' => 'required|string',
+            ],
+            'language' => [
+                'language' => 'required|array',
+                'language.*' => 'required|string',
+                'proficiency' => 'required|array',
+                'proficiency.*' => 'required|string',
+            ],
+            'social_links' => [
+                'platform' => 'required|array',
+                'platform.*' => 'required|string',
+                'link' => 'required|array',
+                'link.*' => 'required|string',
+            ],
+        ];
+
+        // Handle the request based on the type
+        if (in_array($request->type, array_keys($validationRules))) {
+            $validated = $request->validate($validationRules[$request->type]);
+
+            // Data processing and saving logic
+            $data = $this->processAndSaveData($request, $id, $request->type);
+
+            if ($data) {
+                return redirect()->back()->with('success', ucfirst($request->type) . ' information updated successfully.');
+            }
+        }
+
+        return redirect()->back()->with('error', 'Failed to update information.');
+    }
+
+    private function processAndSaveData($request, $id, $type)
+    {
+        // Mapping of types to corresponding field names
+        $fieldsMapping = [
+            'education' => ['degree', 'year', 'grade_point'],
+            'experience' => ['company_name', 'position', 'start_date', 'end_date'],
+            'language' => ['language', 'proficiency'],
+            'social_links' => ['platform', 'link'],
+        ];
+
+        // Ensure the fields exist for the given type
+        if (!isset($fieldsMapping[$type])) {
+            return false;
+        }
+
+        // Prepare the data to be saved
+        $data = [];
+        $fields = $fieldsMapping[$type];
+
+        $count = count($request->{$fields[0]});  // assuming all arrays have the same count
+        for ($i = 0; $i < $count; $i++) {
+            $entry = [];
+            foreach ($fields as $field) {
+                $entry[$field] = $request->{$field}[$i];
+            }
+            $data[] = $entry;
+        }
+
+        // Encode data to JSON
+        $jsonData = json_encode($data);
+
+        // Find the user and update the appropriate column
+        $user = User::find($id);
+        if ($user) {
+            $user->{$type} = $jsonData;
+            $user->save();
+            return true;
+        }
+
+        return false;
+    }
+
+
     public function logout()
     {
         Auth::logout();
@@ -94,14 +248,14 @@ class AuthController extends Controller
     {
         $user_custom_exams = UserCustomExam::where('user_id', Auth::user()->id)->get();
         // Cast `final_score` and `cut_marks` to integers for accurate comparison
-        $passed_count = $user_custom_exams->filter(function($exam) {
-            return (int)$exam->final_score >= (int)$exam->cut_marks;
+        $passed_count = $user_custom_exams->filter(function ($exam) {
+            return (int) $exam->final_score >= (int) $exam->cut_marks;
         })->count();
 
-        $failed_count = $user_custom_exams->filter(function($exam) {
-            return (int)$exam->final_score < (int)$exam->cut_marks;
+        $failed_count = $user_custom_exams->filter(function ($exam) {
+            return (int) $exam->final_score < (int) $exam->cut_marks;
         })->count();
-        
+
         return view('custom.pages.auth.my-exam', compact('user_custom_exams', 'passed_count', 'failed_count'));
     }
 }

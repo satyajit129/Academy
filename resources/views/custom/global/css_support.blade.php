@@ -24,4 +24,45 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('landing/css/style.css') }}" rel="stylesheet">
+
+    <style>
+                .toast {
+    font-family: 'Arial', sans-serif; /* Custom font */
+    border-radius: 10px; /* Rounded corners */
+    padding: 15px; /* Add padding to make the toast bigger */
+}
+
+.toast-success {
+    background-color: #28a745 !important; /* Green background for success */
+    color: #fff !important; /* White text */
+}
+
+.toast-error {
+    background-color: #dc3545 !important; /* Red background for error */
+    color: #fff !important; /* White text */
+}
+
+.toast-info {
+    background-color: #17a2b8 !important; /* Blue background for info */
+    color: #fff !important; /* White text */
+}
+
+.toast-warning {
+    background-color: #ffc107 !important; /* Yellow background for warning */
+    color: #000 !important; /* Black text */
+}
+
+.toast-close-button {
+    color: #fff !important; /* Close button color */
+    font-size: 18px; /* Size of the close button */
+}
+
+.toast-title {
+    font-weight: bold; /* Make title bold */
+}
+
+.toast-message {
+    font-size: 14px; /* Set the size of the message */
+}
+    </style>
 </head>

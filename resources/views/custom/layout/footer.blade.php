@@ -24,8 +24,8 @@
                 </div>
                 <div class="col-lg-4 col-12">
                     <h4 class="text-light mb-4">Quick Links</h4>
-                    <a class="btn btn-link" href="/about">About Us</a>
-                    <a class="btn btn-link" href="/contact">Contact Us</a>
+                    <a class="btn btn-link" href="{{ route('about') }}">About Us</a>
+                    <a class="btn btn-link" href="{{ route('contact') }}">Contact Us</a>
                     <a class="btn btn-link" href="">Terms & Condition</a>
                 </div>
             </div>

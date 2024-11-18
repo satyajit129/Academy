@@ -28,7 +28,6 @@
         .custom-card {
             position: relative;
             overflow: hidden;
-            /* Ensures elements stay inside the card */
         }
 
         .custom-badge {
@@ -68,69 +67,27 @@
             <h2 class="text-center border-bottom">পরীক্ষা</h2>
             <h4>সেরা 10 পারফর্মার</h4>
             <div class="owl-carousel">
-                <div class="item">
-                    <div class="card rounded-0 m-1">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-center mb-3">
-                                <img src="{{ asset('images/' . (Auth::user()->profile_image ?? 'man.png')) }}"
-                                    alt="{{ Auth::user()->name ?? 'User Icon' }}" class="rounded-circle me-2"
-                                    style="width: 50px; height: 50px; object-fit: cover;">
-                                <div>
-                                    <h6 class="mb-0">{{ Auth::user()->name }}</h6>
-                                    <small class="text-muted">{{ Auth::user()->email }}</small>
+                @foreach ($top_performers as $top_performer)
+                    <div class="item">
+                        <div class="card rounded-0 m-1">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-center mb-3">
+                                    <img src="{{ asset('images/'.$top_performer->userInfo->profile_image) }}"
+                                        alt="{{ $top_performer->userInfo->name }}" class="rounded-circle me-2"
+                                        style="width: 50px; height: 50px; object-fit: cover;">
+                                    <div>
+                                        <h6 class="mb-0">{{ $top_performer->userInfo->name }}</h6>
+                                        <small class="text-muted">{{ $top_performer->userInfo->email }}</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="item">
-                    <div class="card rounded-0 m-1">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-center mb-3">
-                                <img src="{{ asset('images/' . (Auth::user()->profile_image ?? 'man.png')) }}"
-                                    alt="{{ Auth::user()->name ?? 'User Icon' }}" class="rounded-circle me-2"
-                                    style="width: 50px; height: 50px; object-fit: cover;">
-                                <div>
-                                    <h6 class="mb-0">{{ Auth::user()->name }}</h6>
-                                    <small class="text-muted">{{ Auth::user()->email }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="card rounded-0 m-1">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-center mb-3">
-                                <img src="{{ asset('images/' . (Auth::user()->profile_image ?? 'man.png')) }}"
-                                    alt="{{ Auth::user()->name ?? 'User Icon' }}" class="rounded-circle me-2"
-                                    style="width: 50px; height: 50px; object-fit: cover;">
-                                <div>
-                                    <h6 class="mb-0">{{ Auth::user()->name }}</h6>
-                                    <small class="text-muted">{{ Auth::user()->email }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="card rounded-0 m-1">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-center mb-3">
-                                <img src="{{ asset('images/' . (Auth::user()->profile_image ?? 'man.png')) }}"
-                                    alt="{{ Auth::user()->name ?? 'User Icon' }}" class="rounded-circle me-2"
-                                    style="width: 50px; height: 50px; object-fit: cover;">
-                                <div>
-                                    <h6 class="mb-0">{{ Auth::user()->name }}</h6>
-                                    <small class="text-muted">{{ Auth::user()->email }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+                
             </div>
             <div class="p-3 " style="text-align: right;">
-                <a href="#" class="btn btn-outline-primary rounded-0">সকল পারফর্মার দেখুন</a>
+                <a href="{{ route('seeAllPerformer') }}" class="btn btn-outline-primary rounded-0">সকল পারফর্মার দেখুন</a>
             </div>
         </div>
         <hr>
@@ -175,10 +132,10 @@
                         items: 1
                     },
                     600: {
-                        items: 2
+                        items: 1
                     },
                     1000: {
-                        items: 3
+                        items: 1
                     }
                 }
             });

@@ -53,7 +53,6 @@ class GoogleController extends Controller
                 $imageName = null; 
             }
             if ($finduser) {
-                
                 $finduser->update([
                     'profile_image' => $imageName,
                 ]);
@@ -68,9 +67,6 @@ class GoogleController extends Controller
                     'profile_image' => $imageName,
                     'password' => bcrypt('123456abc'),
                 ]);
-
-                
-
                 Auth::login($newUser);
                 return redirect()->intended('/');
             }

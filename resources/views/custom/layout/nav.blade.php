@@ -7,7 +7,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse" style="padding-right: 20px!important;">
         <div class="navbar-nav ms-auto p-4 p-lg-0" style="align-items: center;">
-            <a href="/" class="nav-item nav-link @if (Request::is('/')) active @endif">Home</a>
+            <a href="{{ route('landingPage') }}" class="nav-item nav-link @if (Request::is('landingPage')) active @endif">Home</a>
             <a href="{{ route('jobSolution') }}"
                 class="nav-item nav-link {{ Route::is('jobSolution', 'jobSolutionSubjectWise','jobSolutionSubjectWise','subjectWiseQuestions','lessonWiseQuestions','topicWiseQuestions','subTopicWiseQuestions','singleQuestion') ? 'active' : '' }}">
                 Job Solution
@@ -16,7 +16,7 @@
             <a href="{{ route('previousJobExams') }}"
             class="nav-item nav-link {{ Route::is('previousJobExams', 'previousJobExamsQuestion') ? 'active' : '' }}">Previous Job Exams</a>         
             <a href="{{ route('exams') }}"
-                class="nav-item nav-link {{ Route::is('exams', 'customExamsSearch', 'customExamsquestions') ? 'active' : '' }}">Test(Exams)</a>
+                class="nav-item nav-link {{ Route::is('exams', 'customExamsSearch', 'customExamsquestions','seeAllPerformer') ? 'active' : '' }}">Test(Exams)</a>
 
                 
 

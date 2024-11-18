@@ -5,9 +5,10 @@ use Illuminate\Support\Facades\Route;
 
 
 // Static Pages
-    Route::view('/', 'custom.pages.landing');
-    Route::view('/about', 'custom.pages.about');
-    Route::view('/contact', 'custom.pages.contact');
+
+    Route::get('/',[HomeController::class,'landingPage'])->name('landingPage');
+    Route::get('/about',[HomeController::class,'about'])->name('about');
+    Route::get('/contact',[HomeController::class,'contact'])->name('contact');
 
     // Authentication Routes
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -21,6 +22,10 @@ use Illuminate\Support\Facades\Route;
     Route::middleware('auth')->group(function () {
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+        Route::get('/profile-edit',[AuthController::class,'profileEdit'])->name('profileEdit');
+        Route::post('/profile-update/{id}',[AuthController::class,'profileUpdate'])->name('profileUpdate');
+        Route::get('/additional-info-edit',[AuthController::class,'additionalInfoEdit'])->name('additionalInfoEdit');
+        Route::post('/additional-info-update/{id}',[AuthController::class,'additionalInfoUpdate'])->name('additionalInfoUpdate');
         Route::get('/resume', [AuthController::class, 'resume'])->name('resume');
         Route::get('/my-exam', [AuthController::class, 'myExam'])->name('myExam');
     });
@@ -66,6 +71,8 @@ use Illuminate\Support\Facades\Route;
             Route::get('/questions/{id}/{slug}', [ExamController::class, 'customExamsquestions'])->name('customExamsquestions');
             Route::post('submit-ecam',[ExamController::class,'customExamSubmit'])->name('customExamSubmit');
             Route::get('/download-question-pdf',[PDFController::class,'downloadQuestionPdf'])->name('downloadQuestionPdf');
+            Route::get('/top-performers',[ExamController::class,'topPerformers'])->name('topPerformers');
             Route::get('/see-all-performer',[ExamController::class,'seeAllPerformer'])->name('seeAllPerformer');
+            Route::get('/see-all-performer-data', [ExamController::class,'seeAllPerformerData'])->name('seeAllPerformerData');
         });
     });

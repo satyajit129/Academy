@@ -30,7 +30,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 500;
             color: #333;
         }
