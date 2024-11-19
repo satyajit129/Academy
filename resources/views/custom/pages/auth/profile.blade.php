@@ -11,6 +11,7 @@
             height: 150px;
             object-fit: cover;
         }
+        
     </style>
 @endsection
 @section('content')
@@ -28,11 +29,26 @@
             <div class="row align-items-center">
                 <!-- Profile Photo -->
                 <div class="col-md-3 text-center">
-                    <img src="images/man.png" alt="User Photo" class="profile-photo rounded-circle img-thumbnail">
-                    <button class="btn btn-primary btn-sm mt-3">
-                        <i class="fas fa-edit"></i> Edit Photo
-                    </button>
+                    <form action="{{ route('updateProfileImage') }}" method="POST" enctype="multipart/form-data">
+
+                        @csrf
+    
+                        <input type="file" name="image" class="image">
+                        
+    
+                        <input type="hidden" name="image_base64">
+    
+                        <img src="" style="width: 200px;display: none;" class="show-image rounded-circle" > 
+    
+    
+                        <button class="btn btn-success">Submit</button>
+    
+                    </form>
+    
+    
                 </div>
+
+                
 
                 <!-- User Details -->
                 <div class="col-md-9">
@@ -103,15 +119,20 @@
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tbody>
-                            <!-- Education Section -->
                             <tr>
                                 <th>Education</th>
                                 <td>
-                                    <ul class="mb-0">
-                                        @foreach ($education as $item)
-                                            <li style="list-style: none;">{{ $item['degree'] }}, {{ $item['year'] }}</li>
-                                        @endforeach
-                                    </ul>
+                                    @if (!empty($education) && is_iterable($education))
+                                        <ul>
+                                            @foreach ($education as $index => $item)
+                                                <li>
+                                                    Degree: {{ $item['degree'] }}, Year: {{ $item['year'] }}, Grade: {{ $item['grade_point'] }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        No Education Info Added
+                                    @endif
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-outline-primary edit_addition_info" data-info-name="education">
@@ -119,16 +140,23 @@
                                     </button>
                                 </td>
                             </tr>
+                            
                     
                             <!-- Experience Section -->
                             <tr>
                                 <th>Experience</th>
                                 <td>
-                                    <ul class="mb-0">
-                                        @foreach ($experience as $item)
-                                            <li>{{ $item['position'] }}, {{ $item['company_name'] }} ({{ $item['start_date'] }} - {{ $item['end_date'] }})</li>
-                                        @endforeach
-                                    </ul>
+                                    @if (!empty($experience) && is_iterable($experience))
+                                        <ul>
+                                            @foreach ($experience as $item)
+                                                <li>
+                                                    Position:{{ $item['position'] }}, Institute:{{ $item['company_name'] }},  From:{{ $item['start_date'] }} - To:{{ $item['end_date'] }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        No Experience Info Added
+                                    @endif
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-outline-primary edit_addition_info" data-info-name="experience">
@@ -136,15 +164,22 @@
                                     </button>
                                 </td>
                             </tr>
+                            
                     
                             <tr>
                                 <th>Languages</th>
                                 <td>
-                                    @forelse ($languages as $item)
-                                        {{ $item['language'] }} ({{ $item['proficiency'] }})<br>
-                                    @empty
+                                    @if (!empty($languages) && is_iterable($languages))
+                                        <ul>
+                                            @foreach ($languages as $item)
+                                                <li>
+                                                    {{ $item['language'] }} ({{ $item['proficiency'] }})
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
                                         <p>No languages added.</p>
-                                    @endforelse
+                                    @endif
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-outline-primary edit_addition_info" data-info-name="language">
@@ -152,16 +187,23 @@
                                     </button>
                                 </td>
                             </tr>
+                            
 
                             <!-- Social Links Section -->
                             <tr>
                                 <th>Social Links</th>
                                 <td>
-                                    @forelse ($socialLinks as $item)
-                                        <a href="{{ $item['link'] }}" target="_blank">{{ $item['platform'] }}</a><br>
-                                    @empty
+                                    @if (!empty($socialLinks) && is_iterable($socialLinks))
+                                        <ul>
+                                            @foreach ($socialLinks as $item)
+                                                <li>
+                                                    <a href="{{ $item['link'] }}" target="_blank">{{ $item['platform'] }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
                                         <p>No social links added.</p>
-                                    @endforelse
+                                    @endif
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-outline-primary edit_addition_info" data-info-name="social_links">
@@ -169,6 +211,7 @@
                                     </button>
                                 </td>
                             </tr>
+
 
                         </tbody>
                     </table>
@@ -210,6 +253,59 @@
                 </div>
             </div>
             <!-- Edit Profile Modal -->
+
+            {{-- cropper modal --}}
+            <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+
+                <div class="modal-dialog modal-xl" role="document">
+        
+                    <div class="modal-content">
+        
+                        <div class="modal-header">
+        
+                            <h5 class="modal-title" id="modalLabel">Laravel Crop Image Before Upload Example - ItSolutionStuff.com</h5>
+        
+                            <button type="button" class="close" data-bs-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            
+        
+                        </div>
+        
+                        <div class="modal-body">
+        
+                            <div class="img-container">
+        
+                                <div class="row">
+        
+                                    <div class="col-md-12">
+        
+                                        <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+        
+                                    </div>
+        
+                                        <div class="preview"></div>
+        
+                                </div>
+        
+                            </div>
+        
+                        </div>
+        
+                        <div class="modal-footer">
+        
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        
+                            <button type="button" class="btn btn-primary" id="crop">Crop</button>
+        
+                        </div>
+        
+                    </div>
+        
+                </div>
+        
+            </div>
+            {{-- cropper modal --}}
 
         </div>
 
@@ -316,6 +412,80 @@
     });
 </script>
 @endif
+<script>
+    var $modal = $('#modal');
+    var image = document.getElementById('image');
+    var cropper;
+
+    /*------------------------------------------
+    Image Change Event
+    --------------------------------------------*/
+    $("body").on("change", ".image", function (e) {
+        var files = e.target.files;
+        var done = function (url) {
+            image.src = url;
+            $modal.modal('show');
+        };
+
+        var reader;
+        var file;
+
+        if (files && files.length > 0) {
+            file = files[0];
+
+            if (URL) {
+                done(URL.createObjectURL(file));
+            } else if (FileReader) {
+                reader = new FileReader();
+                reader.onload = function (e) {
+                    done(reader.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+
+    /*------------------------------------------
+    Show Model Event
+    --------------------------------------------*/
+    $modal.on('shown.bs.modal', function () {
+        cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+            preview: '.preview'
+        });
+    }).on('hidden.bs.modal', function () {
+        cropper.destroy();
+        cropper = null;
+
+        // Clear the image file and preview
+        image.src = '';
+        $(".image").val(''); // Reset the file input
+    });
+
+    /*------------------------------------------
+    Crop Button Click Event
+    --------------------------------------------*/
+    $("#crop").click(function () {
+        canvas = cropper.getCroppedCanvas({
+            width: 100,
+            height: 100,
+        });
+
+        canvas.toBlob(function (blob) {
+            url = URL.createObjectURL(blob);
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function () {
+                var base64data = reader.result; 
+                $("input[name='image_base64']").val(base64data);
+                $(".show-image").show();
+                $(".show-image").attr("src", base64data);
+                $("#modal").modal('toggle');
+            };
+        });
+    });
+</script>
 
 
 @endsection

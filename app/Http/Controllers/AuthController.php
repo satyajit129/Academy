@@ -139,7 +139,13 @@ class AuthController extends Controller
     public function additionalInfoEdit(Request $request)
     {
         $data = $request->data;
-        return view('custom.pages.auth.additional_info_edit', compact('data'));
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+        if ($user && !empty($user->$data)) {
+            $decodedData = json_decode($user->$data, true);
+            return view('custom.pages.auth.additional_info_edit', compact('data', 'user', 'decodedData'));
+        }
+        return view('custom.pages.auth.additional_info_edit', compact('data', 'user'));
     }
 
     public function additionalInfoUpdate(Request $request, $id)
@@ -176,42 +182,31 @@ class AuthController extends Controller
                 'link.*' => 'required|string',
             ],
         ];
-
-        // Handle the request based on the type
         if (in_array($request->type, array_keys($validationRules))) {
             $validated = $request->validate($validationRules[$request->type]);
-
-            // Data processing and saving logic
             $data = $this->processAndSaveData($request, $id, $request->type);
-
             if ($data) {
                 return redirect()->back()->with('success', ucfirst($request->type) . ' information updated successfully.');
             }
         }
-
         return redirect()->back()->with('error', 'Failed to update information.');
     }
 
     private function processAndSaveData($request, $id, $type)
     {
-        // Mapping of types to corresponding field names
         $fieldsMapping = [
             'education' => ['degree', 'year', 'grade_point'],
             'experience' => ['company_name', 'position', 'start_date', 'end_date'],
             'language' => ['language', 'proficiency'],
             'social_links' => ['platform', 'link'],
         ];
-
-        // Ensure the fields exist for the given type
         if (!isset($fieldsMapping[$type])) {
             return false;
         }
-
-        // Prepare the data to be saved
         $data = [];
         $fields = $fieldsMapping[$type];
 
-        $count = count($request->{$fields[0]});  // assuming all arrays have the same count
+        $count = count($request->{$fields[0]});
         for ($i = 0; $i < $count; $i++) {
             $entry = [];
             foreach ($fields as $field) {
@@ -219,11 +214,7 @@ class AuthController extends Controller
             }
             $data[] = $entry;
         }
-
-        // Encode data to JSON
         $jsonData = json_encode($data);
-
-        // Find the user and update the appropriate column
         $user = User::find($id);
         if ($user) {
             $user->{$type} = $jsonData;
@@ -233,7 +224,9 @@ class AuthController extends Controller
 
         return false;
     }
-
+    public function updateProfileImage(Request $request){
+        dd($request->all());
+    }
 
     public function logout()
     {

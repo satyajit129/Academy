@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('/profile-update/{id}',[AuthController::class,'profileUpdate'])->name('profileUpdate');
         Route::get('/additional-info-edit',[AuthController::class,'additionalInfoEdit'])->name('additionalInfoEdit');
         Route::post('/additional-info-update/{id}',[AuthController::class,'additionalInfoUpdate'])->name('additionalInfoUpdate');
+        Route::post('update-profile-image',[AuthController::class,'updateProfileImage'])->name('updateProfileImage');
         Route::get('/resume', [AuthController::class, 'resume'])->name('resume');
         Route::get('/my-exam', [AuthController::class, 'myExam'])->name('myExam');
     });

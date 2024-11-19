@@ -10,12 +10,22 @@
             <label for="education" class="form-label">Education</label>
             <input type="hidden" name="type" value="education">
             <div id="education-fields">
-                <!-- Education fields will be appended here -->
-                <div class="education-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
-                    <input type="text" class="form-control mb-2 mb-sm-0 flex-fill" name="degree[]" placeholder="Degree Name" required>
-                    <input type="text" class="form-control mb-2 mb-sm-0 flex-fill" name="year[]" placeholder="Year" required>
-                    <input type="text" class="form-control mb-2 mb-sm-0 flex-fill" name="grade_point[]" placeholder="Grade Point" required>
-                </div>
+                @if(isset($decodedData) && !empty($decodedData))
+                    @foreach($decodedData as $item)
+                        <div class="education-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
+                            <input type="text" class="form-control mb-2 mb-sm-0 flex-fill" name="degree[]" value="{{ $item['degree'] ?? '' }}" placeholder="Degree Name" required>
+                            <input type="text" class="form-control mb-2 mb-sm-0 flex-fill" name="year[]" value="{{ $item['year'] ?? '' }}" placeholder="Year" required>
+                            <input type="text" class="form-control mb-2 mb-sm-0 flex-fill" name="grade_point[]" value="{{ $item['grade_point'] ?? '' }}" placeholder="Grade Point" required>
+                        </div>
+                    @endforeach
+                @else
+                    <!-- If no education data, show empty fields -->
+                    <div class="education-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
+                        <input type="text" class="form-control mb-2 mb-sm-0 flex-fill" name="degree[]" placeholder="Degree Name" required>
+                        <input type="text" class="form-control mb-2 mb-sm-0 flex-fill" name="year[]" placeholder="Year" required>
+                        <input type="text" class="form-control mb-2 mb-sm-0 flex-fill" name="grade_point[]" placeholder="Grade Point" required>
+                    </div>
+                @endif
             </div>
             <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
                 <button type="button" class="btn btn-primary" id="add-education">Add Education</button>
@@ -23,9 +33,7 @@
             </div>
         </div>
     </div>
-
-
-
+    
     <script>
         $(document).ready(function() {
             // Add new education item
@@ -78,13 +86,24 @@
             <label for="experience" class="form-label">Experience</label>
             <input type="hidden" name="type" value="experience">
             <div id="experience-fields">
-                <!-- Experience fields will be appended here -->
-                <div class="experience-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
-                    <input type="text" class="form-control flex-fill" name="company_name[]" placeholder="Company Name" required>
-                    <input type="text" class="form-control flex-fill" name="position[]" placeholder="Position" required>
-                    <input type="date" class="form-control flex-fill" name="start_date[]" placeholder="Start Date" required>
-                    <input type="date" class="form-control flex-fill" name="end_date[]" placeholder="End Date" required>
-                </div>
+                @if(isset($decodedData) && !empty($decodedData))
+                    @foreach($decodedData as $item)
+                        <div class="experience-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
+                            <input type="text" class="form-control flex-fill" name="company_name[]" value="{{ $item['company_name'] ?? '' }}" placeholder="Company Name" required>
+                            <input type="text" class="form-control flex-fill" name="position[]" value="{{ $item['position'] ?? '' }}" placeholder="Position" required>
+                            <input type="date" class="form-control flex-fill" name="start_date[]" value="{{ $item['start_date'] ?? '' }}" placeholder="Start Date" required>
+                            <input type="date" class="form-control flex-fill" name="end_date[]" value="{{ $item['end_date'] ?? '' }}" placeholder="End Date" required>
+                        </div>
+                    @endforeach
+                @else
+                    <!-- If no experience data, show empty fields -->
+                    <div class="experience-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
+                        <input type="text" class="form-control flex-fill" name="company_name[]" placeholder="Company Name" required>
+                        <input type="text" class="form-control flex-fill" name="position[]" placeholder="Position" required>
+                        <input type="date" class="form-control flex-fill" name="start_date[]" placeholder="Start Date" required>
+                        <input type="date" class="form-control flex-fill" name="end_date[]" placeholder="End Date" required>
+                    </div>
+                @endif
             </div>
             <div class="d-flex justify-content-between">
                 <button type="button" class="btn btn-primary" id="add-experience">Add Experience</button>
@@ -92,6 +111,7 @@
             </div>
         </div>
     </div>
+    
 
     <script>
         $(document).ready(function() {
@@ -141,17 +161,25 @@
 
     @elseif($data == 'language')
 
-    <!-- Language Section -->
     <div class="row">
         <div class="col-md-12">
             <label for="language" class="form-label">Languages</label>
             <input type="hidden" name="type" value="language">
             <div id="language-fields">
-                <!-- Language fields will be appended here -->
-                <div class="language-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
-                    <input type="text" class="form-control flex-fill" name="language[]" placeholder="Language" required>
-                    <input type="text" class="form-control flex-fill" name="proficiency[]" placeholder="Proficiency" required>
-                </div>
+                @if(isset($decodedData) && !empty($decodedData))
+                    @foreach($decodedData as $item)
+                        <div class="language-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
+                            <input type="text" class="form-control flex-fill" name="language[]" value="{{ $item['language'] ?? '' }}" placeholder="Language" required>
+                            <input type="text" class="form-control flex-fill" name="proficiency[]" value="{{ $item['proficiency'] ?? '' }}" placeholder="Proficiency" required>
+                        </div>
+                    @endforeach
+                @else
+                    <!-- Default empty language field -->
+                    <div class="language-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
+                        <input type="text" class="form-control flex-fill" name="language[]" placeholder="Language" required>
+                        <input type="text" class="form-control flex-fill" name="proficiency[]" placeholder="Proficiency" required>
+                    </div>
+                @endif
             </div>
             <div class="d-flex justify-content-between">
                 <button type="button" class="btn btn-primary" id="add-language">Add Language</button>
@@ -159,6 +187,7 @@
             </div>
         </div>
     </div>
+    
 
     <script>
         $(document).ready(function() {
@@ -204,24 +233,33 @@
 
     @elseif($data == 'social_links')
 
-    <!-- Social Links Section -->
     <div class="row">
         <div class="col-md-12">
             <label for="social_links" class="form-label">Social Links</label>
             <input type="hidden" name="type" value="social_links">
             <div id="social-links-fields">
-                <!-- Social links fields will be appended here -->
-                <div class="social-links-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
-                    <input type="text" class="form-control flex-fill" name="platform[]" placeholder="Platform" required>
-                    <input type="text" class="form-control flex-fill" name="link[]" placeholder="Link" required>
-                </div>
+                @if(isset($decodedData) && !empty($decodedData))
+                    @foreach($decodedData as $item)
+                        <div class="social-links-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
+                            <input type="text" class="form-control flex-fill" name="platform[]" value="{{ $item['platform'] ?? '' }}" placeholder="Platform" required>
+                            <input type="text" class="form-control flex-fill" name="link[]" value="{{ $item['link'] ?? '' }}" placeholder="Link" required>
+                        </div>
+                    @endforeach
+                @else
+                    <!-- Default empty social link field -->
+                    <div class="social-links-item mb-3 d-flex flex-column flex-sm-row gap-2 align-items-start align-items-sm-center">
+                        <input type="text" class="form-control flex-fill" name="platform[]" placeholder="Platform" required>
+                        <input type="text" class="form-control flex-fill" name="link[]" placeholder="Link" required>
+                    </div>
+                @endif
             </div>
             <div class="d-flex justify-content-between">
                 <button type="button" class="btn btn-primary" id="add-social-link">Add Social Link</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-        </div>
+        </>
     </div>
+    
 
     <script>
         $(document).ready(function() {
