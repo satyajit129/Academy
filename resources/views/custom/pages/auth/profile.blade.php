@@ -32,16 +32,12 @@
                     <form action="{{ route('updateProfileImage') }}" method="POST" enctype="multipart/form-data">
 
                         @csrf
-    
+                        <img src="" style="width: 200px;display: none;" class="show-image rounded-circle" > 
                         <input type="file" name="image" class="image">
-                        
-    
+                       
                         <input type="hidden" name="image_base64">
     
-                        <img src="" style="width: 200px;display: none;" class="show-image rounded-circle" > 
-    
-    
-                        <button class="btn btn-success">Submit</button>
+                        <button class="btn btn-success w-100 mt-2">Submit</button>
     
                     </form>
     
