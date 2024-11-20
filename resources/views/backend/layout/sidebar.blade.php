@@ -75,6 +75,20 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('GKList') }}" aria-expanded="false"
+                    class="{{ request()->routeIs('GKList') ? 'active' : '' }}">
+                    <i class="icon icon-app-store "></i>
+                    <span class="nav-text">General Knowledge</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('teamMembersList') }}" aria-expanded="false"
+                    class="{{ request()->routeIs('teamMembersList','teamMemberCreateorUpdate') ? 'active' : '' }}">
+                    <i class="icon icon-app-store "></i>
+                    <span class="nav-text">Team Members</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('settings') }}" aria-expanded="false"
                     class="{{ request()->routeIs('settings') ? 'active' : '' }}">
                     <i class="icon icon-app-store "></i>

@@ -26,25 +26,29 @@
 
         <div class="container mt-4">
             <!-- Profile Section -->
-            <div class="row align-items-center">
+            <div class="row">
                 <!-- Profile Photo -->
                 <div class="col-md-3 text-center">
                     <form action="{{ route('updateProfileImage') }}" method="POST" enctype="multipart/form-data">
-
                         @csrf
-                        <img src="" style="width: 200px;display: none;" class="show-image rounded-circle" > 
-                        <input type="file" name="image" class="image">
-                       
-                        <input type="hidden" name="image_base64">
-    
-                        <button class="btn btn-success w-100 mt-2">Submit</button>
-    
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="m-0 text-center bg-light">
+                                    Upload Image
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <img src="{{ isset($user->profile_image) ? asset('images/'.$user->profile_image) : '' }}" 
+                                    style="width: 100%; display: {{ isset($user->profile_image) ? 'block' : 'none' }};" 
+                                    class="show-image">
+                                <input type="file" name="image" class="image form-control mt-3">
+                                <input type="hidden" name="image_base64">
+                                <button class="btn btn-success w-100 mt-2">Submit</button>
+                            </div>
+                        </div>
+                        
                     </form>
-    
-    
                 </div>
-
-                
 
                 <!-- User Details -->
                 <div class="col-md-9">
@@ -259,7 +263,7 @@
         
                         <div class="modal-header">
         
-                            <h5 class="modal-title" id="modalLabel">Laravel Crop Image Before Upload Example - ItSolutionStuff.com</h5>
+                            <h5 class="modal-title" id="modalLabel">Crop Your image</h5>
         
                             <button type="button" class="close" data-bs-dismiss="modal">
                                 <span aria-hidden="true">×</span>

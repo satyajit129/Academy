@@ -97,6 +97,18 @@ Route::middleware(['web'])->group(function () {
             Route::get('/download/{id}', [PDFController::class, 'customExamsDownload'])->name('customExamsDownload');
         });
 
+        Route::group(['prefix'=> 'team-members'],function(){
+            Route::get('/list',[TeamMemberController::class,'teamMembersList'])->name('teamMembersList');
+            Route::get('/create-or-update/{id?}',[TeamMemberController::class,'teamMemberCreateorUpdate'])->name('teamMemberCreateorUpdate');
+            Route::post('/store/{id?}',[TeamMemberController::class,'teamMembersStore'])->name('teamMembersStore');
+            Route::get('/delete/{id}',[TeamMemberController::class,'teamMemberDelete'])->name('teamMemberDelete');
+        });
+
+        Route::group(['prefix' => 'gk'], function(){
+            Route::get('/list',[GKController::class,'GKList'])->name('GKList');
+            Route::get('/create-or-update/{id?}',[GKController::class,'GKCreateorUpdate'])->name('GKCreateorUpdate');
+        });
+
         Route::get('get-subject-lessons', [SubjectTopicsController::class, 'getSubjectLessons'])->name('getSubjectLessons');
         Route::get('get-subject-topics', [QuestionController::class, 'getSubjectTopics'])->name('getSubjectTopics');
         Route::get('get-subject-sub-topics', [QuestionController::class, 'getSubjectSubTopics'])->name('getSubjectSubTopics');

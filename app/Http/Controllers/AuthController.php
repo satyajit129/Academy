@@ -224,9 +224,40 @@ class AuthController extends Controller
 
         return false;
     }
-    public function updateProfileImage(Request $request){
-        dd($request->all());
+
+    public function updateProfileImage(Request $request)
+    {
+        $request->validate([
+            'image_base64' => 'required|string',
+        ],[
+            'image_base64.required' => 'দয়া করে ছবি সিলেক্ট করুন।'
+        ]);
+        $base64Image = $request->input('image_base64');
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+            $data = substr($base64Image, strpos($base64Image, ',') + 1);
+            $type = strtolower($type[1]);
+            $data = base64_decode($data);
+
+            if ($data === false) {
+                return redirect()->back()->with('error', 'Base64 decoding failed');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Invalid image data');
+        }
+        $fileName = uniqid() . '.' . $type;
+        $publicPath = public_path('images');
+        if (!file_exists($publicPath)) {
+            mkdir($publicPath, 0755, true);
+        }
+        $filePath = $publicPath . '/' . $fileName;
+        file_put_contents($filePath, $data);
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+        $user->profile_image = $fileName;
+        $user->save();
+        return redirect()->back()->with('success', 'Profile image updated successfully');
     }
+
 
     public function logout()
     {

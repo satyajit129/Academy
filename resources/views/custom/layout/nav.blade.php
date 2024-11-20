@@ -73,32 +73,8 @@
                 </li>
                 <hr>
                 <li class="mb-2">
-                    <a href="{{ route('resume') }}" class="text-decoration-none">
-                        <i class="fas fa-star me-2"></i> My Resume
-                    </a>
-                </li>
-                <hr>
-                <li class="mb-2">
                     <a href="{{ route('myExam') }}" class="text-decoration-none">
                         <i class="fas fa-star me-2"></i> My Exam
-                    </a>
-                </li>
-                <hr>
-                <li class="mb-2">
-                    <a href="" class="text-decoration-none">
-                        <i class="fas fa-star me-2"></i> Favorites
-                    </a>
-                </li>
-                <hr>
-                <li class="mb-2">
-                    <a href="" class="text-decoration-none">
-                        <i class="fas fa-bookmark me-2"></i> Bookmarks
-                    </a>
-                </li>
-                <hr>
-                <li class="mb-2">
-                    <a href="" class="text-decoration-none">
-                        <i class="fas fa-cog me-2"></i> Settings
                     </a>
                 </li>
                 <hr>
