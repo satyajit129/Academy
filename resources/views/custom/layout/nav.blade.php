@@ -1,4 +1,4 @@
-<div style="background: #b0caaaa9;">
+<div style="background: #c9d6d9;">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light border-5 sticky-top p-0" >
             <a href="/" class="navbar-brand d-flex align-items-center text-white" style="font-weight: 600; letter-spacing: 1px;">
