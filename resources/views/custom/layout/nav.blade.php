@@ -5,7 +5,7 @@
                 <h2 class="mb-0">একাডেমী</h2>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" style="border: none;">
-                <span class="navbar-toggler-icon" style="background-color: #fff;"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse" style="padding-right: 20px!important;">
                 <div class="navbar-nav ms-auto p-4 p-lg-0 text-white">
