@@ -45,66 +45,34 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5" style="margin-bottom: 6rem;">
         <div class="container py-5">
-            <h1 class="display-3 text-white mb-3 animated slideInDown">বিগত চাকরির পরীক্ষা</h1>
+            
+            <h4 class="display-3 text-white mb-3 animated slideInDown">বিগত চাকরির পরীক্ষা</h4>
             <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-white active" aria-current="page">About</li>
-                </ol>
             </nav>
         </div>
     </div>
-    <!-- Page Header End -->
-    <div class="container-fluid mt-5">
-        <div class="row mb-2">
-
-            <div class="col-lg-4 col-12 mt-1">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="m-0">অন্যান্য নিয়োগ পরীক্ষা</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a href="{{ route('previousJobExams') }}"><i class="fas fa-briefcase me-2"></i> সব
-                                    পরীক্ষা</a>
-                            </li>
-                            @foreach ($others_jobs_categories as $category)
-                                @php
-                                    $category_id = encrypt($category->id);
-                                @endphp
-                                <li class="list-group-item">
-                                    <a class="" href="{{ route('previousJobExams', ['category' => $category_id]) }}">
-                                        <i class="fas fa-briefcase me-2"></i>
-                                        {{ $category->name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-lg-8 col-12 mt-1">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="m-0">বিগত চাকরির পরীক্ষা</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row mb-4">
-                            <div class="col-lg-12">
-                                <input type="text" id="searchInput" class="form-control shadow-sm"
-                                    placeholder="Search exams by Name or Exam category...">
+    <div style="background:#d9c9d7bd; padding: 2rem 0; margin-bottom: 6rem;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-wrapper">
+                        <div class="section-header text-center">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom:10px;">
+                                <span style="flex-grow: 1; height: 2px; background-color: #FF3E41;"></span>
+                                <h3 style="margin: 0; padding: 0 10px;">পরীক্ষা সমুখ </h3>
+                                <span style="flex-grow: 1; height: 2px; background-color: #FF3E41;"></span>
                             </div>
                         </div>
-
-                        <div class="row" id="examList">
-                            <!-- Exam List Partial -->
-                            @include('custom.pages.previous_exam.partials.exam_list', [
-                                'previous_job_exams' => $previous_job_exams,
-                            ])
+                        <div class="section-body">
+                            <div class="row" id="examList">
+                                @include('custom.pages.previous_exam.partials.exam_list', [
+                                    'previous_job_exams' => $previous_job_exams,
+                                ])
+                            </div>
+                            
                         </div>
+                        
+                        
                     </div>
                 </div>
             </div>

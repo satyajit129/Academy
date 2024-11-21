@@ -150,6 +150,7 @@ class AuthController extends Controller
 
     public function additionalInfoUpdate(Request $request, $id)
     {
+        // dd($request->all());
         $validationRules = [
             'education' => [
                 'degree' => 'required|array',
@@ -271,7 +272,6 @@ class AuthController extends Controller
     public function myExam()
     {
         $user_custom_exams = UserCustomExam::where('user_id', Auth::user()->id)->get();
-        // Cast `final_score` and `cut_marks` to integers for accurate comparison
         $passed_count = $user_custom_exams->filter(function ($exam) {
             return (int) $exam->final_score >= (int) $exam->cut_marks;
         })->count();

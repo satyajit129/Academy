@@ -4,29 +4,17 @@
         $encryptedId = encrypt($previous_job_exam->id);
         $encryptedSlug = encrypt($previous_job_exam->slug);
     @endphp
-    <div class="col-lg-6 col-md-6 col-sm-12 col-12 exam-item">
-        <div class="card shadow-sm border-light rounded-0 position-relative custom-card">
-            <span class="custom-badge">
-                {{ $previous_job_exam->questions->count() }}
-                <span class="visually-hidden">Total questions</span>
-            </span>
-            <div class="card-body">
-                <h6 class="card-title text-success fw-bold exam-name mb-2">
-                    {{ \Illuminate\Support\Str::limit($previous_job_exam->name, 50) }}
-                    
-                </h6>
-                <div class="d-flex justify-content-start gap-2 align-items-center mb-3">
-                    <small class="text-muted">
-                        {{ Carbon\Carbon::parse($previous_job_exam->exam_date)->format('j F Y') }}
-                    </small> |
-                    <small class="text-muted ">MCQ</small> |
-                    <small class="text-muted">{{ $previous_job_exam->category->name }}</small>
-                </div>
-                <div class="d-flex justify-content-between">
-                    
-                    <a href="{{ route('previousJobExamsQuestion', ['slug' => $encryptedSlug, 'id' => $encryptedId]) }}"
-                       class="btn btn-outline-success btn-sm rounded-0">
-                        See all Questions
+    <div class="col-lg-4 col-md-6 col-12">
+        <div style="border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1); background-color: #ffffff; transition: transform 0.3s ease, box-shadow 0.3s ease; margin-bottom:10px;">
+            <div class="d-flex justify-content-center">
+                <img src="{{ asset('images/card-image.png') }}" style="width: 130px; height:auto;margin-top:10px;">
+            </div>
+            <div style="padding: 20px; text-align: center;">
+                <h6 style="font-size: 1.5rem; font-weight: bold; color: #333; margin-bottom: 15px;">{{ $previous_job_exam->name }}</h6>
+                <div class="btn-section btn-single w-100">
+                    <a href="{{ route('previousJobExamsQuestion', ['slug' => $encryptedSlug, 'id' => $encryptedId]) }}" style="width:100%; display: inline-block; text-decoration: none; color: #000000; background-color: #ffecec; padding: 10px 20px; border-radius: 5px; font-weight: bold; box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); transition: background-color 0.3s ease, transform 0.3s ease;">
+                        <span>See List Questions</span> &nbsp;
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
                     </a>
                 </div>
             </div>
@@ -37,7 +25,3 @@
             <p class="text-center text-danger"> কোন তথ্য পাওয়া যায়নি</p>
         <hr>
     @endforelse
-
-<div class="p-2">
-    {{ $previous_job_exams->links() }}
-</div>

@@ -7,10 +7,14 @@
     <link href="img/favicon.ico" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@100..800&family=Baloo+Da+2:wght@400..800&family=Galada&family=Mate+SC&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rokkitt:ital,wght@0,100..900;1,100..900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap-icons.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/toastr.min.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.min.css">
+    {{-- <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.min.css"> --}}
+    <link rel="stylesheet" href="{{ asset('frontend/css/cropper.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('frontend/css/cropper.css') }}"> --}}
     <link href="{{ asset('landing/lib/animate/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('landing/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('landing/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -55,5 +59,10 @@
         .toast-message {
             font-size: 14px;
         }
+    </style>
+    <style>
+        h1, h2, h3, h4, h5, h6, p, span {
+        font-family: "Baloo Da 2", sans-serif !important;
+    }
     </style>
 </head>

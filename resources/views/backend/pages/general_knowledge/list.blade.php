@@ -20,20 +20,38 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered verticle-middle table-responsive-sm" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>SL</th>
-                                    <th>Date</th>
-                                    <th>Question</th>
-                                    <th>Answer</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        @foreach ($paginator as $date => $questions)
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <h3>Date: {{ \Carbon\Carbon::parse($date)->format('d F Y') }}</h3>
+                                    <a href="{{ route('GKEdit', $date) }}" class="btn btn-primary btn-sm btn-rounded">Edit</a>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered verticle-middle table-responsive-sm" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Question</th>
+                                                <th>Answer</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($questions as $index => $question)
+                                                <tr>
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $question->question }}</td>
+                                                    <td>{{ $question->answer }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
+                    {{ $paginator->links() }}
                 </div>
+                
             </div>
         </div>
     </div>

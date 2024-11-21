@@ -38,7 +38,6 @@ use Illuminate\Support\Facades\Route;
     // Job Solution Routes
     Route::prefix('job-solution')->group(function () {
         Route::get('/', [FrontendJobSolutionController::class, 'jobSolution'])->name('jobSolution');
-
         Route::middleware('auth')->group(function () {
             Route::get('/subject-wise/{slug}/{id}', [FrontendJobSolutionController::class, 'jobSolutionSubjectWise'])->name('jobSolutionSubjectWise');
             Route::get('/subject-wise-questions/{subject_id}', [FrontendJobSolutionController::class, 'subjectWiseQuestions'])->name('subjectWiseQuestions');

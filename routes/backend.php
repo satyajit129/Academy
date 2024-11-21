@@ -107,6 +107,9 @@ Route::middleware(['web'])->group(function () {
         Route::group(['prefix' => 'gk'], function(){
             Route::get('/list',[GKController::class,'GKList'])->name('GKList');
             Route::get('/create-or-update/{id?}',[GKController::class,'GKCreateorUpdate'])->name('GKCreateorUpdate');
+            Route::post('/store',[GKController::class,'GKStore'])->name('GKStore');
+            Route::get('/edit/{date}',[GKController::class,'GKEdit'])->name('GKEdit');
+            Route::post('/update/{date}',[GKController::class,'GKUpdate'])->name('GKUpdate');
         });
 
         Route::get('get-subject-lessons', [SubjectTopicsController::class, 'getSubjectLessons'])->name('getSubjectLessons');

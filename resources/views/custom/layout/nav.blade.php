@@ -1,45 +1,36 @@
-<nav class="navbar navbar-expand-lg bg-white navbar-light shadow border-top border-5 border-primary sticky-top p-0">
-    <a href="/" class="navbar-brand bg-primary d-flex align-items-center px-4 px-lg-5">
-        <h2 class="mb-2 text-white">Academy</h2>
-    </a>
-    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse" style="padding-right: 20px!important;">
-        <div class="navbar-nav ms-auto p-4 p-lg-0" style="align-items: center;">
-            <a href="{{ route('landingPage') }}" class="nav-item nav-link @if (Request::is('landingPage')) active @endif">Home</a>
-            <a href="{{ route('jobSolution') }}"
-                class="nav-item nav-link {{ Route::is('jobSolution', 'jobSolutionSubjectWise','jobSolutionSubjectWise','subjectWiseQuestions','lessonWiseQuestions','topicWiseQuestions','subTopicWiseQuestions','singleQuestion') ? 'active' : '' }}">
-                Job Solution
+<div style="background: #b0caaaa9;">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light border-5 sticky-top p-0" >
+            <a href="/" class="navbar-brand d-flex align-items-center text-white" style="font-weight: 600; letter-spacing: 1px;">
+                <h2 class="mb-0">একাডেমী</h2>
             </a>
-
-            <a href="{{ route('previousJobExams') }}"
-            class="nav-item nav-link {{ Route::is('previousJobExams', 'previousJobExamsQuestion') ? 'active' : '' }}">Previous Job Exams</a>         
-            <a href="{{ route('exams') }}"
-                class="nav-item nav-link {{ Route::is('exams', 'customExamsSearch', 'customExamsquestions','seeAllPerformer') ? 'active' : '' }}">Test(Exams)</a>
-
-                
-
-            @if (Auth::check())
-                @if (Auth::user()->profile_image != null)
-                    <img src="{{ asset('images/' . Auth::user()->profile_image) }}" alt="User Icon"
-                        style="width: 30px; height: 30px; border-radius: 50%; min-width: 30px; overflow: hidden;"
-                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasUserinfo"
-                        aria-controls="offcanvasUserinfo">
-                @else
-                    <img src="{{ asset('images/man.png') }}" alt="User Icon"
-                        style="width: 30px; height: 30px; border-radius: 50%; min-width: 30px; overflow: hidden;"
-                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasUserinfo"
-                        aria-controls="offcanvasUserinfo">
-                @endif
-            @else
-                <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
-                <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
-            @endif
-
-        </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" style="border: none;">
+                <span class="navbar-toggler-icon" style="background-color: #fff;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse" style="padding-right: 20px!important;">
+                <div class="navbar-nav ms-auto p-4 p-lg-0 text-white">
+                    <a href="{{ route('landingPage') }}" class="nav-item nav-link px-3 py-2 rounded @if (Request::is('landingPage')) active @endif" >হোম</a>
+                    <a href="{{ route('about') }}" class="nav-item nav-link px-3 py-2 rounded @if (Request::is('about')) active @endif" >আমাদের সম্পর্কে</a>
+                    <a href="{{ route('contact') }}" class="nav-item nav-link px-3 py-2 rounded @if (Request::is('contact')) active @endif" >যোগাযোগ</a>
+                    
+                    @if (Auth::check())
+                        <div class="nav-item">
+                            @if (Auth::user()->profile_image != null)
+                                <img src="{{ asset('images/' . Auth::user()->profile_image) }}" alt="User Icon" class="rounded-circle" style="width: 35px; height: 35px; cursor: pointer; transition: all 0.3s ease;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasUserinfo" aria-controls="offcanvasUserinfo">
+                            @else
+                                <img src="{{ asset('images/man.png') }}" alt="User Icon" class="rounded-circle" style="width: 35px; height: 35px; cursor: pointer; transition: all 0.3s ease;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasUserinfo" aria-controls="offcanvasUserinfo">
+                            @endif
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}" class="nav-item nav-link px-3 py-2 rounded" >Login</a>
+                        <a href="{{ route('register') }}" class="nav-item nav-link px-3 py-2 rounded" >Register</a>
+                    @endif
+                </div>
+            </div>
+        </nav>
     </div>
-</nav>
+</div>
+
 <!-- Navbar End -->
 
 <div class="offcanvas offcanvas-end text-bg-light" tabindex="-1" id="offcanvasUserinfo"
