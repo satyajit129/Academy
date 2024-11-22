@@ -9,10 +9,9 @@ use Illuminate\Support\Facades\Route;
     Route::get('/',[HomeController::class,'landingPage'])->name('landingPage');
     Route::get('/about',[HomeController::class,'about'])->name('about');
     Route::get('/contact',[HomeController::class,'contact'])->name('contact');
-
     // Authentication Routes
     Route::get('/login', [AuthController::class, 'login'])->name('login');
-    
+
     Route::post('/login-request', [AuthController::class, 'loginRequest'])->name('loginRequest');
     Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('redirectToGoogle');
     Route::get('/auth/google/callback', [GoogleController::class, 'googleCallback'])->name('googleCallback');
