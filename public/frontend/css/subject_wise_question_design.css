@@ -1,0 +1,70 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+p{
+    margin: 0;
+    padding: 0;
+}
+.custom-tree-list {
+    list-style-type: none;
+    padding-left: 20px;
+    position: relative;
+}
+
+.custom-tree-item {
+    margin: 10px 0;
+    position: relative;
+}
+.custom-tree-item > .underline_dots{
+    border-bottom: 1px dotted #3498db;
+}
+
+.custom-node {
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+.custom-tree-item > .custom-node {
+    color: #2c3e50;
+}
+
+.subject_node::before {
+    content: "\f5fd"; 
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.lesson_node::before {
+    content: "\f24d"; 
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.topic_node::before {
+    content: "\f1b2"; 
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.subtopic_node::before {
+    content: "\f565"; /* fa-icons for subtopic */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.card-footer button {
+    margin-left: 10px;
+}
