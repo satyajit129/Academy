@@ -28,7 +28,8 @@
     <!-- Carousel End -->
 
     <!-- Question Bank -->
-    <div style="background:#d9c9d7bd; padding: 2rem 0; margin-bottom: 6rem;">
+    <div style="background: linear-gradient(to right, #9e778ebd, #83bfce); padding: 2rem 0; margin-bottom: 6rem;">
+
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -77,7 +78,7 @@
     <!-- Question Bank -->
 
     <!-- SubjectWise Question -->
-    <div style="background:#c9d6d9; padding: 2rem 0; margin-bottom: 6rem;">
+    <div style="background: linear-gradient(to left, #9e778ebd, #83bfce); padding: 2rem 0; margin-bottom: 6rem;">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -128,7 +129,8 @@
 
 
     <!-- Model Test  -->
-    <div style="background:#d9c9d7bd; padding: 2rem 0; margin-bottom: 6rem;">
+    <div style="background: linear-gradient(to right, #9e778ebd, #83bfce); padding: 2rem 0; margin-bottom: 6rem;">
+
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -170,43 +172,43 @@
     <!-- Model Test -->
 
 
-<!-- Our Team -->
-<div style="background: #f4f6f8; padding: 3rem 0;">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-wrapper">
-                    <div class="section-header text-center mb-5">
-                        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
-                            <span style="flex-grow: 1; height: 3px; background-color: #FF3E41;"></span>
-                            <h3 style="font-size: 2rem; color: #333; font-weight: 600; margin: 0; padding: 0 15px;">Meet Our Team</h3>
-                            <span style="flex-grow: 1; height: 3px; background-color: #FF3E41;"></span>
+    <!-- Our Team -->
+    <div style="background: linear-gradient(to left, #9e778ebd, #83bfce); padding: 2rem 0; margin-bottom: 6rem;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-wrapper">
+                        <div class="section-header text-center mb-5">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
+                                <span style="flex-grow: 1; height: 3px; background-color: #FF3E41;"></span>
+                                <h3 style="font-size: 2rem; color: #333; font-weight: 600; margin: 0; padding: 0 15px;">Meet Our Team</h3>
+                                <span style="flex-grow: 1; height: 3px; background-color: #FF3E41;"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="section-body">
-                        <div class="row">
-                            @foreach ($team_members as $team_member)
-                                <div class="col-lg-3 col-md-6 col-12 mb-4">
-                                    <div class="team-card" style="border-radius: 12px; overflow: hidden; box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); background-color: #fff; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                                        <div class="d-flex justify-content-center" style="padding: 1rem; border-bottom: 1px solid #e0e0e0;">
-                                            <img src="{{ asset('images/' . $team_member->image) }}" alt="{{ $team_member->name }}" style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover;">
-                                        </div>
-                                        <div class="text-center p-3">
-                                            <h5 style="font-size: 1.25rem; font-weight: bold; color: #333; margin-bottom: 0.5rem;">{{ $team_member->name }}</h5>
-                                            <p style="font-size: 1rem; color: #555; margin: 0;">{{ $team_member->role }}</p>
-                                            <p style="font-size: 0.875rem; color: #777;">{{ $team_member->education }}</p>
+                        <div class="section-body">
+                            <div class="row">
+                                @foreach ($team_members as $team_member)
+                                    <div class="col-lg-3 col-md-6 col-12 mb-4">
+                                        <div class="team-card" style="border-radius: 12px; overflow: hidden; box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); background-color: #fff; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                                            <div class="d-flex justify-content-center" style="padding: 1rem; border-bottom: 1px solid #e0e0e0;">
+                                                <img src="{{ asset('images/' . $team_member->image) }}" alt="{{ $team_member->name }}" style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover;">
+                                            </div>
+                                            <div class="text-center p-3">
+                                                <h5 style="font-size: 1.25rem; font-weight: bold; color: #333; margin-bottom: 0.5rem;">{{ $team_member->name }}</h5>
+                                                <p style="font-size: 1rem; color: #555; margin: 0;">{{ $team_member->role }}</p>
+                                                <p style="font-size: 0.875rem; color: #777;">{{ $team_member->education }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Our Team -->
+    <!-- Our Team -->
 
 
     {{-- <!-- Modal -->
